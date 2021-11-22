@@ -1,10 +1,7 @@
 export { createContext } from './createContext';
-export { line } from './line';
-export { circle } from './circle';
-export { rect } from './rect';
-export { path } from './path';
-export { restore } from './restore';
-export { save } from './save';
-export { scale } from './scale';
-export { translate } from './translate';
-export { rotate } from './rotate';
+export {
+  line, circle, text, rect, path,
+} from './shape';
+export {
+  restore, save, scale, translate, rotate,
+} from './transform';
