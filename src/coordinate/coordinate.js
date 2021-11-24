@@ -1,12 +1,21 @@
 import { compose, identity } from './utils';
 
 export function createCoordinate({
-  transforms = [], ...options
+  transforms: createTransforms = [], ...options
 }) {
-  const coordinates = transforms
+  const coordinates = createTransforms
     .map((createTransform) => createTransform(options))
-    .flat()
-    .map((d) => d.transform);
+    .flat();
 
-  return coordinates.length ? compose(...coordinates) : identity;
+  const types = coordinates.map((d) => d.type);
+  const transforms = coordinates.map((d) => d.transform);
+  const output = transforms.length ? compose(...transforms) : identity;
+
+  output.isPolar = () => types.indexOf('polar') !== -1;
+  output.isTranspose = () => {
+    const count = types.filter((d) => d === 'transpose').length;
+    return count % 2 !== 0;
+  };
+
+  return output;
 }
