@@ -21,6 +21,8 @@ describe('Test Coordinate', () => {
       transforms: [cartesian()],
     });
     expect(c([0.5, 0.5])).toEqual([100, 150]);
+    expect(c.isPolar()).toBeFalsy();
+    expect(c.isTranspose()).toBeFalsy();
   });
 
   test('transpose()', () => {
@@ -34,6 +36,8 @@ describe('Test Coordinate', () => {
 
     expect(c([0.5, 1])).toEqual([0, 150]);
     expect(c([0.4, 1])).toEqual([0, 120]);
+    expect(c.isPolar()).toBeFalsy();
+    expect(c.isTranspose()).toBeTruthy();
   });
 
   test('polar()', () => {
@@ -46,6 +50,8 @@ describe('Test Coordinate', () => {
     });
 
     expect(c1([0, 1])).toEqual([150, 100]);
+    expect(c1.isPolar()).toBeTruthy();
+    expect(c1.isTranspose()).toBeFalsy();
 
     const c2 = createCoordinate({
       width: 200,
