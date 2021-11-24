@@ -1,16 +1,13 @@
 import { createOrdinal } from './ordinal';
 
 export function createBand(options) {
-  const { bandRange } = band(options);
-  return createOrdinal({ ...options, range: bandRange });
-}
+  const { bandRange, bandWidth, step } = band(options);
+  const scale = createOrdinal({ ...options, range: bandRange });
 
-export function bandWidth(options) {
-  return band(options).bandWidth;
-}
+  scale.getBandWidth = () => bandWidth;
+  scale.getStep = () => step;
 
-export function bandStep(options) {
-  return band(options).step;
+  return scale;
 }
 
 function band({ domain, range, padding }) {
