@@ -13,11 +13,22 @@ export function line(context, attributes) {
 }
 
 export function rect(context, attributes) {
-  return shape('rect', context, attributes);
+  const {
+    width, height, x, y,
+  } = attributes;
+
+  return shape('rect', context, {
+    ...attributes,
+    width: Math.abs(width),
+    height: Math.abs(height),
+    x: width > 0 ? x : x + width,
+    y: height > 0 ? y : y + height,
+  });
 }
 
 export function path(context, attributes) {
-  return shape('path', context, attributes);
+  const { d } = attributes;
+  return shape('path', context, { ...attributes, d: d.flat().join(' ') });
 }
 
 export function circle(context, attributes) {
