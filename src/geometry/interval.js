@@ -10,7 +10,7 @@ export function interval({
     fill: F, stroke: S, x: X, y: Y, y1: Y1,
   } = values;
   const { x } = scales;
-  const width = x ? x.getBandWidth() : 1;
+  const width = x ? x.bandWidth() : 1;
   return index.map((i) => {
     const vx = X[i] || 0;
     const styles = {
@@ -55,7 +55,7 @@ export function interval({
   });
 }
 
-interval.getChannels = () => ({
+interval.channels = () => ({
   x: createXChannel({ name: 'x', scaleType: 'band', optional: false }),
   y: createYChannel({ name: 'y', optional: false }),
   y1: createYChannel({ name: 'y1' }),

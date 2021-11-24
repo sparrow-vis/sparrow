@@ -2,8 +2,8 @@ import { createLinear } from '../scale';
 
 export function cartesian() {
   return ({
-    x = 0, y = 0, width = 300, height = 150,
-  } = {}) => transform(x, y, width, height);
+    x, y, width, height,
+  }) => transform(x, y, width, height);
 }
 
 function transform(x, y, width, height) {

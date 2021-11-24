@@ -29,7 +29,7 @@ describe('Test interval', () => {
   };
 
   test('channels', () => {
-    const channels = interval.getChannels();
+    const channels = interval.channels();
     expect(channels).toEqual({
       x: {
         name: 'x', type: 'position', optional: false, scaleType: 'band', scale: 'x',
@@ -123,7 +123,9 @@ describe('Test interval', () => {
       height,
       x: 0,
       y: 0,
-      transforms: [polar(0, Math.PI * 2, 0.2, 1), cartesian()],
+      transforms: [polar({
+        startAngle: 0, endAngle: Math.PI * 2, innerRadius: 0.2, outerRadius: 1,
+      }), cartesian()],
     });
     const paths = interval({
       renderer,
@@ -154,7 +156,9 @@ describe('Test interval', () => {
       height,
       x: 0,
       y: 0,
-      transforms: [polar(0, Math.PI * 2, 0.2, 1), cartesian()],
+      transforms: [polar({
+        startAngle: 0, endAngle: Math.PI * 2, innerRadius: 0.2, outerRadius: 1,
+      }), cartesian()],
     });
     const circles = interval({
       renderer,
