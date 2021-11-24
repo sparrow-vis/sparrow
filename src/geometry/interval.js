@@ -4,7 +4,7 @@ import {
 } from './utils';
 
 export function interval({
-  renderer, context, index, values, directStyles, scales, coordinate,
+  renderer, index, values, directStyles, scales, coordinate,
 }) {
   const {
     fill: F, stroke: S, x: X, y: Y, y1: Y1,
@@ -28,7 +28,7 @@ export function interval({
 
       if (colline(...ps)) {
         const r = dist(c, ps[0]);
-        return renderer.circle(context, {
+        return renderer.circle({
           ...styles,
           cx: c[0],
           cy: c[1],
@@ -36,7 +36,7 @@ export function interval({
         });
       }
       const d = arcPath(c, ...ps);
-      return renderer.path(context, {
+      return renderer.path({
         ...styles,
         d,
       });
@@ -45,7 +45,7 @@ export function interval({
     const v2 = [vx + width, Y1[i]];
     const [p0, p2] = [v0, v2].map(coordinate);
     const [w, h] = sub(p2, p0);
-    return renderer.rect(context, {
+    return renderer.rect({
       ...styles,
       x: p0[0],
       y: p0[1],

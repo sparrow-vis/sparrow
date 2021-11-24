@@ -1,12 +1,12 @@
-import * as renderer from '../../src/renderer';
+import { createRenderer } from '../../src/renderer';
 import { mount } from '../../src/renderer/utils';
 import { createDiv } from '../utils';
 
 describe('shapes', () => {
   test('draw circle', () => {
-    const context = renderer.createContext(600, 400);
+    const renderer = createRenderer(600, 400);
 
-    const circle = renderer.circle(context, {
+    const circle = renderer.circle({
       cx: 100,
       cy: 100,
       r: 50,
@@ -15,9 +15,9 @@ describe('shapes', () => {
       strokeWidth: 10,
     });
 
-    mount(createDiv(), context.node);
+    mount(createDiv(), renderer.node());
 
-    expect(circle.parentNode).toBe(context.group);
+    expect(circle.parentNode).toBe(renderer.group());
     expect(circle.getAttribute('cx')).toBe('100');
   });
 });
