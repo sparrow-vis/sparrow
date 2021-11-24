@@ -1,7 +1,7 @@
 import {
   cartesian, createCoordinate, polar, transpose,
 } from '../../src/coordinate';
-import { interval } from '../../src/geometry';
+import { createInterval } from '../../src/geometry';
 import { createRenderer } from '../../src/renderer';
 import { mount } from '../../src/renderer/utils';
 import { createBand } from '../../src/scale';
@@ -27,6 +27,7 @@ describe('Test interval', () => {
     y: [0.6, 0.4, 0.2],
     y1: [1, 1, 1],
   };
+  const interval = createInterval();
 
   test('channels', () => {
     const channels = interval.channels();
