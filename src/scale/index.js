@@ -3,4 +3,4 @@ export {
 } from './linear';
 export { createIdentity } from './identity';
 export { createOrdinal } from './ordinal';
-export { createBand, bandStep, bandWidth } from './band';
+export { createBand } from './band';
