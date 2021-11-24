@@ -46,7 +46,12 @@ describe('Test Coordinate', () => {
       height: 200,
       x: 0,
       y: 0,
-      transforms: [polar(), cartesian()],
+      transforms: [polar({
+        startAngle: -Math.PI / 2,
+        endAngle: (Math.PI / 2) * 3,
+        innerRadius: 0,
+        outerRadius: 1,
+      }), cartesian()],
     });
 
     expect(c1([0, 1])).toEqual([150, 100]);
@@ -60,10 +65,12 @@ describe('Test Coordinate', () => {
       y: 0,
       transforms: [
         polar(
-          Math.PI / 2,
-          (Math.PI * 3) / 2,
-          0.2,
-          0.8,
+          {
+            startAngle: Math.PI / 2,
+            endAngle: (Math.PI * 3) / 2,
+            innerRadius: 0.2,
+            outerRadius: 0.8,
+          },
         ),
         cartesian(),
       ],

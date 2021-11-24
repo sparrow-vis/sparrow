@@ -1,9 +1,5 @@
-import {
-  createLinear,
-  linearNice,
-  linearTicks,
-  interpolateNumber,
-} from '../../src/scale';
+import { createLinear, interpolateNumber, linearNice } from '../../src/scale';
+import { ticks } from '../../src/scale/utils';
 
 describe('test Linear', () => {
   test('createLinear(options) returns a a linear function.', () => {
@@ -48,16 +44,16 @@ describe('test Linear', () => {
   });
 
   test('linearTicks(domain, tickCount) return ticks in 1, 2, 5 * 10 ^ n format', () => {
-    const ticks10 = linearTicks([0, 1], 10);
-    const ticks9 = linearTicks([0, 1], 9);
-    const ticks8 = linearTicks([0, 1], 9);
-    const ticks7 = linearTicks([0, 1], 7);
-    const ticks6 = linearTicks([0, 1], 6);
-    const ticks5 = linearTicks([0, 1], 5);
-    const ticks4 = linearTicks([0, 1], 4);
-    const ticks3 = linearTicks([0, 1], 3);
-    const ticks2 = linearTicks([0, 1], 2);
-    const ticks1 = linearTicks([0, 1], 1);
+    const ticks10 = ticks(0, 1, 10);
+    const ticks9 = ticks(0, 1, 9);
+    const ticks8 = ticks(0, 1, 9);
+    const ticks7 = ticks(0, 1, 7);
+    const ticks6 = ticks(0, 1, 6);
+    const ticks5 = ticks(0, 1, 5);
+    const ticks4 = ticks(0, 1, 4);
+    const ticks3 = ticks(0, 1, 3);
+    const ticks2 = ticks(0, 1, 2);
+    const ticks1 = ticks(0, 1, 1);
     expect(ticks10).toEqual([
       0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1,
     ]);

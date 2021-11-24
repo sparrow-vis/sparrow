@@ -1,8 +1,8 @@
 import { translate, scale, reflectY } from './affine';
 import { createLinear } from '../scale';
 
-export function polar(...args) {
-  return ({ width = 300, height = 300 } = {}) => {
+export function polar(options) {
+  return ({ width, height }) => {
     const aspect = width / height;
     const sx = aspect > 1 ? 1 / aspect : 1;
     const sy = aspect > 1 ? 1 : aspect;
@@ -10,7 +10,7 @@ export function polar(...args) {
       translate(0, -0.5),
       reflectY(),
       translate(0, 0.5),
-      transform(...args),
+      transform(options),
       scale(sx, sy),
       scale(0.5, 0.5),
       translate(0.5, 0.5),
@@ -19,10 +19,12 @@ export function polar(...args) {
 }
 
 function transform(
-  startAngle = -Math.PI / 2,
-  endAngle = (Math.PI / 2) * 3,
-  innerRadius = 0,
-  outerRadius = 1,
+  {
+    innerRadius,
+    outerRadius,
+    startAngle,
+    endAngle,
+  },
 ) {
   const radius = createLinear({
     domain: [0, 1],

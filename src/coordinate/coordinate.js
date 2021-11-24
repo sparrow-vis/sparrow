@@ -1,7 +1,8 @@
 import { compose, identity } from './utils';
 
 export function createCoordinate({
-  transforms: createTransforms = [], x, y, width, height,
+  x, y, width, height,
+  transforms: createTransforms,
 }) {
   const coordinates = createTransforms
     .map((createTransform) => createTransform({
