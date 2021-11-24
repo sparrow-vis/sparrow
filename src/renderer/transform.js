@@ -1,10 +1,5 @@
 import { applyTransform, createSVGElement, mount } from './utils';
 
-export function transform(type, context, ...params) {
-  const { group } = context;
-  applyTransform(group, `${type}(${params.join(', ')})`);
-}
-
 export function translate(context, tx, ty) {
   transform('translate', context, tx, ty);
 }
@@ -28,4 +23,9 @@ export function restore(context) {
   const { group } = context;
   const { parentNode } = group;
   context.group = parentNode;
+}
+
+function transform(type, context, ...params) {
+  const { group } = context;
+  applyTransform(group, `${type}(${params.join(', ')})`);
 }

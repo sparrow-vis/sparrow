@@ -1,10 +1,12 @@
-import * as renderer from '../../src/renderer';
+import { createRenderer } from '../../src/renderer';
 import { mount } from '../../src/renderer/utils';
 import { createDiv } from '../utils';
 
 describe('context', () => {
   test('createContext(width, height) returns expected context', () => {
-    const { node, group } = renderer.createContext(600, 400);
+    const renderer = createRenderer(600, 400);
+    const node = renderer.node();
+    const group = renderer.group();
 
     expect(node.tagName).toBe('svg');
     expect(node.getAttribute('width')).toBe('600');

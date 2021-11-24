@@ -2,7 +2,7 @@ import {
   cartesian, createCoordinate, polar, transpose,
 } from '../../src/coordinate';
 import { interval } from '../../src/geometry';
-import * as renderer from '../../src/renderer';
+import { createRenderer } from '../../src/renderer';
 import { mount } from '../../src/renderer/utils';
 import { createBand } from '../../src/scale';
 import { createDiv, getAttributes } from '../utils';
@@ -50,7 +50,7 @@ describe('Test interval', () => {
   });
 
   test('cartesian', () => {
-    const context = renderer.createContext(width, height);
+    const renderer = createRenderer(width, height);
     const coordinate = createCoordinate({
       width,
       height,
@@ -61,7 +61,6 @@ describe('Test interval', () => {
 
     const rects = interval({
       renderer,
-      context,
       index,
       coordinate,
       directStyles,
@@ -69,7 +68,7 @@ describe('Test interval', () => {
       scales,
     });
 
-    mount(createDiv(), context.node);
+    mount(createDiv(), renderer.node());
 
     const attributes = ['fill', 'x', 'y', 'stroke', 'width', 'height'];
     const r0 = rects[0];
@@ -85,7 +84,7 @@ describe('Test interval', () => {
   });
 
   test('transpose', () => {
-    const context = renderer.createContext(width, height);
+    const renderer = createRenderer(width, height);
     const coordinate = createCoordinate({
       width,
       height,
@@ -95,7 +94,6 @@ describe('Test interval', () => {
     });
     const rects = interval({
       renderer,
-      context,
       index,
       coordinate,
       directStyles,
@@ -113,11 +111,11 @@ describe('Test interval', () => {
       width: '240',
       height: '100',
     });
-    mount(createDiv(), context.node);
+    mount(createDiv(), renderer.node());
   });
 
   test('polar', () => {
-    const context = renderer.createContext(width, height);
+    const renderer = createRenderer(width, height);
     const coordinate = createCoordinate({
       width,
       height,
@@ -129,7 +127,6 @@ describe('Test interval', () => {
     });
     const paths = interval({
       renderer,
-      context,
       index,
       coordinate,
       directStyles,
@@ -146,11 +143,11 @@ describe('Test interval', () => {
       d: 'M 404 200 A 104 104 0 0 1 300 304 L 300 240 A 40 40 0 0 0 340 200 Z',
     });
 
-    mount(createDiv(), context.node);
+    mount(createDiv(), renderer.node());
   });
 
   test('donut', () => {
-    const context = renderer.createContext(width, height);
+    const renderer = createRenderer(width, height);
     const coordinate = createCoordinate({
       width,
       height,
@@ -162,7 +159,6 @@ describe('Test interval', () => {
     });
     const circles = interval({
       renderer,
-      context,
       index,
       coordinate,
       directStyles,
@@ -186,6 +182,6 @@ describe('Test interval', () => {
       r: '199.99999999999994',
     });
 
-    mount(createDiv(), context.node);
+    mount(createDiv(), renderer.node());
   });
 });
