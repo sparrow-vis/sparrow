@@ -1,1 +1,1 @@
-export { drawRedRect } from './drawRectRect';
+export { drawRedRect } from './drawRedRect';
