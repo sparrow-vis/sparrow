@@ -1,4 +1,4 @@
-import { compose, identity } from './utils';
+import { compose, identity } from '../utils';
 
 export function createCoordinate({
   x, y, width, height,
