@@ -1,6 +1,6 @@
 import { createIdentity } from '../../src/scale';
 
-describe('tes Identity', () => {
+describe('test Identity', () => {
   test('createIdentity() returns a identity function.', () => {
     const s = createIdentity();
 
