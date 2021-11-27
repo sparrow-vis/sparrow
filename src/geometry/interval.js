@@ -1,7 +1,5 @@
 import { createColorChannel, createXChannel, createYChannel } from './channel';
-import {
-  colline, dist, arcPath, sub,
-} from './utils';
+import { rect } from './shape';
 
 export function createInterval() {
   const render = ({
@@ -19,47 +17,19 @@ export function createInterval() {
         ...(S && { stroke: S[i] }),
         ...(F && { fill: F[i] }),
       };
-      if (coordinate.isPolar()) {
-        const c = coordinate.getCenter();
-        const v0 = [vx, Y[i]];
-        const v1 = [v0[0] + width, v0[1]];
-        const v2 = [v1[0], Y1[i]];
-        const v3 = [v0[0], Y1[i]];
-        const ps = [v0, v1, v2, v3].map(coordinate);
-
-        if (colline(...ps)) {
-          const r = dist(c, ps[0]);
-          return renderer.circle({
-            ...styles,
-            cx: c[0],
-            cy: c[1],
-            r,
-          });
-        }
-        const d = arcPath(c, ...ps);
-        return renderer.path({
-          ...styles,
-          d,
-        });
-      }
       const v0 = [vx, Y[i]];
-      const v2 = [vx + width, Y1[i]];
-      const [p0, p2] = [v0, v2].map(coordinate);
-      const [w, h] = sub(p2, p0);
-      return renderer.rect({
-        ...styles,
-        x: p0[0],
-        y: p0[1],
-        width: w,
-        height: h,
-      });
+      const v1 = [v0[0] + width, v0[1]];
+      const v2 = [v1[0], Y1[i]];
+      const v3 = [v0[0], Y1[i]];
+      const points = [v0, v1, v2, v3];
+      return rect(renderer, points, styles, coordinate);
     });
   };
 
   render.channels = () => ({
     x: createXChannel({ name: 'x', scaleType: 'band', optional: false }),
     y: createYChannel({ name: 'y', optional: false }),
-    y1: createYChannel({ name: 'y1' }),
+    y1: createYChannel({ name: 'y1', optional: false }),
     fill: createColorChannel({ name: 'fill' }),
     stroke: createColorChannel({ name: 'stroke' }),
   });

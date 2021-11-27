@@ -1,1 +1,1 @@
-export { interval } from './interval';
+export { createInterval } from './interval';

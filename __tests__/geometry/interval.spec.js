@@ -39,7 +39,7 @@ describe('Test interval', () => {
         name: 'y', type: 'position', optional: false, scale: 'y',
       },
       y1: {
-        name: 'y1', type: 'position', optional: true, scale: 'y',
+        name: 'y1', type: 'position', optional: false, scale: 'y',
       },
       fill: {
         name: 'fill', type: 'color', optional: true, scale: 'color',
@@ -169,18 +169,20 @@ describe('Test interval', () => {
         y: [0, 1 / 3, 2 / 3],
         y1: [1 / 3, 2 / 3, 1],
       },
-      scales: {},
+      scales: {
+        x: createBand({ domain: [0], range: [0, 1], padding: 0 }),
+      },
     });
 
     const attributes = ['fill', 'stroke', 'cx', 'cy', 'r'];
-    const c0 = circles[0];
+    const c0 = circles[0][1];
     expect(c0.tagName).toBe('circle');
     expect(getAttributes(c0, attributes)).toEqual({
-      stroke: 'black',
-      fill: 'red',
+      stroke: 'red',
+      fill: 'transparent',
       cx: '300',
       cy: '200',
-      r: '199.99999999999994',
+      r: '173.33333333333331',
     });
 
     mount(createDiv(), renderer.node());
