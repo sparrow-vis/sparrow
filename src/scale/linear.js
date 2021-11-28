@@ -1,5 +1,5 @@
 import {
-  interpolateNumber, normalize, tickStep, nice, floor, ceil, ticks,
+  normalize, tickStep, nice, floor, ceil, ticks,
 } from './utils';
 
 export function createLinear({
@@ -13,7 +13,9 @@ export function createLinear({
   };
 
   scale.ticks = (tickCount) => ticks(d0, d1, tickCount);
-
+  scale.nice = (tickCount) => {
+    [d0, d1] = linearNice([d0, d1], tickCount);
+  };
   return scale;
 }
 
@@ -23,4 +25,8 @@ export function linearNice([min, max], tickCount) {
     floor: (x) => floor(x, step),
     ceil: (x) => ceil(x, step),
   });
+}
+
+export function interpolateNumber(t, start, stop) {
+  return start * (1 - t) + stop * t;
 }
