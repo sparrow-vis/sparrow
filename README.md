@@ -1,6 +1,6 @@
 # 🦜 Sparrow
 
-> Sparrow is still working in progress and will coming soon.
+> Sparrow is still working in progress.
 
 Sparrow is a tiny plot library based on the grammar of graphics for learning purpose. It aims at helping people to better understand visualization and making it easier for them to choose the the suitable visualization library for their analysis task.
 
@@ -8,7 +8,7 @@ Sparrow is a tiny plot library based on the grammar of graphics for learning pur
 
 ## 📎 Links
 
-- [Examples]()
+- [Introduction](https://observablehq.com/@pearmini/sparrow)
 - [Tutorials in Chinese](https://juejin.cn/book/7031893648145186824)
 
 ## ✨ Features
