@@ -40,9 +40,9 @@ const chart = sp
   .interval()
   .data(data)
   .encode(
-    sp.x("name"), 
-    sp.y("value"), 
-    sp.color("name")
+    sp.x().field("name"), 
+    sp.y().field("value"), 
+    sp.color().field("name")
   )
   .plot();
 

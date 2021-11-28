@@ -47,6 +47,13 @@ describe('Test interval', () => {
       stroke: {
         name: 'stroke', type: 'color', optional: true, scale: 'color',
       },
+      label: {
+        name: 'label',
+        optional: true,
+        scale: 'text',
+        scaleType: 'identity',
+        type: 'text',
+      },
     });
   });
 
