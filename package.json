@@ -1,18 +1,29 @@
 {
-  "name": "sparrow",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "@sparrow-vis/sparrow",
+  "version": "0.0.1",
+  "description": "Sparrow is a tiny plot library based on the grammar of graphics for learning purpose.",
+  "main": "lib/sparrow.js",
+  "module": "esm/sparrow.js",
+  "unpkg": "dist/sparrow.min.js",
   "scripts": {
     "lint": "eslint --fix",
     "test": "jest --coverage",
     "build": "rimraf -rf ./dist ./lib ./esm && rollup --config",
     "ci": "run-s lint test build",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "prepublishOnly": "npm run ci"
   },
-  "keywords": [],
+  "files": [
+    "src",
+    "lib",
+    "esm",
+    "dist"
+  ],
+  "keywords": [
+    "visualization"
+  ],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.15.7",
     "@babel/core": "^7.15.8",
@@ -30,11 +41,19 @@
     "npm-run-all": "^4.1.5",
     "rimraf": "^3.0.2",
     "rollup": "^2.58.3",
-    "rollup-plugin-babel": "^4.4.0"
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-node-resolve": "^5.2.0"
   },
   "lint-staged": {
     "*.js": [
       "eslint --fix"
     ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sparrow-vis/sparrow"
+  },
+  "bugs": {
+    "url": "https://github.com/sparrow-vis/sparrow/issues"
   }
 }

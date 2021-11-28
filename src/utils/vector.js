@@ -14,10 +14,18 @@ export function sub([x1, y1], [x0, y0]) {
   return [x1 - x0, y1 - y0];
 }
 
+// TODO: refactor
 export function angleBetween(v0, v1) {
   const a0 = angle(v0);
   const a1 = angle(v1);
-  if (a0 * a1 >= 0) return Math.abs(a0 - a1);
+  if (a0 >= 0 && a1 >= 0) {
+    if (Math.abs(a0) < Math.abs(a1)) return Math.abs(a0 - a1);
+    return Math.PI * 2 - Math.abs(a0 - a1);
+  }
+  if (a0 < 0 && a1 < 0) {
+    if (Math.abs(a0) > Math.abs(a1)) return Math.abs(a0 - a1);
+    return Math.PI * 2 - Math.abs(a0 - a1);
+  }
   if (a0 < 0 && a1 > 0) return Math.abs(a0) + a1;
   return Math.PI * 2 - a0 - Math.abs(a1);
 }

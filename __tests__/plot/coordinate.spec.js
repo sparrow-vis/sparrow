@@ -46,23 +46,18 @@ describe('coordinate', () => {
 
   test('radical bar chart', () => {
     const data = [
-      { name: 'philosophers', value: 35 },
-      { name: 'questions', value: 17 },
-      { name: 'schools', value: 25 },
+      { genre: 'Sports', sold: 275 },
+      { genre: 'Strategy', sold: 115 },
+      { genre: 'Action', sold: 120 },
+      { genre: 'Shooter', sold: 350 },
+      { genre: 'Other', sold: 150 },
     ];
 
     const chart = sp
       .interval()
       .data(data)
-      .coordinate(
-        sp.transpose(),
-        sp.polar(),
-      )
-      .encode(
-        sp.x().field('name'),
-        sp.y().field('value'),
-        sp.fill().field('name'),
-      )
+      .coordinate(sp.transpose(), sp.polar())
+      .encode(sp.x().field('genre'), sp.y().field('sold'), sp.fill().field('genre'))
       .plot();
 
     mount(createDiv(), chart);
