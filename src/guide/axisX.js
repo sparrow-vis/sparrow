@@ -22,7 +22,6 @@ export function axisX({
     isVertical,
     ...axisOptions,
   });
-
   if (showTitle(title, coordinate)) {
     const direction = isVertical ? 'down' : 'right';
     const [point, text] = titleOf([1, y], coordinate, title, direction);
