@@ -19,10 +19,6 @@ export function normalize(value, start, stop) {
   return (value - start) / (stop - start);
 }
 
-export function interpolateNumber(t, start, stop) {
-  return start * (1 - t) + stop * t;
-}
-
 export function ceil(n, base) {
   return base * Math.ceil(n / base);
 }
