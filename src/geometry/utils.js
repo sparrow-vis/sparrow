@@ -1,34 +1,86 @@
+import {
+  equal, dist, angleBetween, sub,
+} from '../utils';
+
+export function rect(renderer, [v0, v1, v2, v3], coordinate, styles) {
+  if (!coordinate.isPolar()) {
+    const [p0, p2] = [v0, v2].map(coordinate);
+    const [w, h] = sub(p2, p0);
+    return renderer.rect({
+      ...styles,
+      x: p0[0],
+      y: p0[1],
+      width: w,
+      height: h,
+    });
+  }
+
+  const center = coordinate.getCenter();
+  const vs = coordinate.isTranspose()
+    ? [v3, v0, v1, v2]
+    : [v0, v1, v2, v3];
+  const ps = vs.map(coordinate);
+
+  if (!colline(...ps)) {
+    const d = arcPath(center, ...ps);
+    return renderer.path({
+      ...styles,
+      d,
+    });
+  }
+
+  const r = dist(center, ps[0]);
+  const r1 = dist(center, ps[2]);
+  return cirque(renderer, center[0], center[1], r, r1, styles);
+}
+
+export function cirque(renderer, x, y, r, r1, styles) {
+  const { stroke, strokeWidth, fill } = styles;
+  const innerStroke = renderer.circle({
+    fill: 'transparent',
+    stroke: stroke || fill,
+    strokeWidth,
+    cx: x,
+    cy: y,
+    r: r1,
+  });
+  const ring = renderer.circle({
+    ...styles,
+    strokeWidth: r - r1 - (strokeWidth || 1),
+    stroke: fill,
+    fill: 'transparent',
+    cx: x,
+    cy: y,
+    r: r1 + (r - r1) / 2,
+  });
+  const outerStroke = renderer.circle({
+    fill: 'transparent',
+    stroke: stroke || fill,
+    strokeWidth,
+    cx: x,
+    cy: y,
+    r,
+  });
+
+  return [innerStroke, ring, outerStroke];
+}
+
+export function rectLabel(renderer, label, [v0, , v2], coordinate, styles) {
+  const vx = (v0[0] + v2[0]) / 2;
+  const vy = (v0[1] + v2[1]) / 2;
+  const [x, y] = coordinate([vx, vy]);
+  const { formatter = (d) => `${d}`, ...rest } = styles;
+  return renderer.text({
+    x,
+    y,
+    text: formatter(label),
+    textAnchor: 'middle',
+    ...rest,
+  });
+}
+
 export function colline(p0, p1, p2, p3) {
   return equal(p0, p1) && equal(p2, p3);
-}
-
-export function equal([x0, y0], [x1, y1]) {
-  return closeTo(x0, x1) && closeTo(y0, y1);
-}
-
-export function closeTo(x, y, tol = 1e-5) {
-  return Math.abs(x - y) < tol;
-}
-
-export function dist([x0, y0], [x1 = 0, y1 = 0] = []) {
-  return Math.sqrt((x0 - x1) ** 2 + (y0 - y1) ** 2);
-}
-
-export function sub([x1, y1], [x0, y0]) {
-  return [x1 - x0, y1 - y0];
-}
-
-export function angleBetween(v0, v1) {
-  const a0 = angle(v0);
-  const a1 = angle(v1);
-  if (a0 * a1 >= 0) return Math.abs(a0 - a1);
-  if (a0 < 0 && a1 > 0) return Math.abs(a0) + a1;
-  return Math.PI * 2 - a0 - Math.abs(a1);
-}
-
-export function angle([x, y]) {
-  const theta = Math.atan2(y, x);
-  return theta;
 }
 
 export function arcPath(c, p0, p1, p2, p3) {
@@ -44,4 +96,24 @@ export function arcPath(c, p0, p1, p2, p3) {
     ['A', r1, r1, 0, l1, 0, p3[0], p3[1]],
     ['Z'],
   ];
+}
+
+export function fromStyles(styles) {
+  const geometryStyles = {};
+  const labelStyles = {};
+  for (const [key, value] of Object.entries(styles)) {
+    if (key.startsWith('label')) {
+      const labelKey = toLowerCase(key.replace('label', ''));
+      labelStyles[labelKey] = value;
+    } else {
+      geometryStyles[key] = value;
+    }
+  }
+  return [geometryStyles, labelStyles];
+}
+
+export function toLowerCase(string) {
+  const a = string.slice(0, 1);
+  const b = string.slice(1);
+  return a.toLowerCase() + b;
 }

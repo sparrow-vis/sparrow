@@ -15,5 +15,11 @@ export function createYChannel(options) {
 }
 
 export function createColorChannel(options) {
-  return createChannel({ scale: 'color', ...options, type: 'color' });
+  return createChannel({ scale: 'color', type: 'color', ...options });
+}
+
+export function createLabelChannel(options) {
+  return createChannel({
+    scale: 'text', scaleType: 'identity', type: 'text', ...options,
+  });
 }

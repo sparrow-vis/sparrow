@@ -28,7 +28,10 @@ export function circle(context, attributes) {
 }
 
 export function text(context, attributes) {
-  return shape('text', context, attributes);
+  const { text, ...rest } = attributes;
+  const textElement = shape('text', context, rest);
+  textElement.textContent = text;
+  return textElement;
 }
 
 function shape(type, context, attributes) {
