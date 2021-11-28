@@ -4,6 +4,8 @@
 
 Sparrow is a tiny plot library based on the grammar of graphics for learning purpose. It aims at helping people to better understand visualization and making it easier for them to choose the the suitable visualization library for their analysis task.
 
+![](https://gw.alipayobjects.com/mdn/rms_38d0f7/afts/img/A*YLU0Q4RDo00AAAAAAAAAAAAAARQnAQ)
+
 ![](https://gw.alipayobjects.com/mdn/rms_38d0f7/afts/img/A*romnSZgAWacAAAAAAAAAAAAAARQnAQ)
 
 ## 📎 Links
@@ -15,7 +17,7 @@ Sparrow is a tiny plot library based on the grammar of graphics for learning pur
 
 The name **sparrow** comes from an old Chinese proverb: "Though sparrow is small, but it has all organs". As its name, Sparrow has the following features:
 
-- **Small**: The code is around 1000 lines in total.
+- **Small**: The code is around 1500 lines in total.
 - **Simple**: The source code is easy to understand.
 - **Complete**: It has the core features of a plot library.
 
