@@ -34,7 +34,41 @@ export function text(context, attributes) {
   return textElement;
 }
 
-function shape(type, context, attributes) {
+export function ring(context, attributes) {
+  const {
+    cx, cy, r1, r2, ...styles
+  } = attributes;
+  const { stroke, strokeWidth, fill } = styles;
+  const defaultStrokeWidth = 1;
+  const innerStroke = circle(context, {
+    fill: 'transparent',
+    stroke: stroke || fill,
+    strokeWidth,
+    cx,
+    cy,
+    r: r1,
+  });
+  const ring = circle(context, {
+    ...styles,
+    strokeWidth: r2 - r1 - (strokeWidth || defaultStrokeWidth),
+    stroke: fill,
+    fill: 'transparent',
+    cx,
+    cy,
+    r: (r1 + r2) / 2,
+  });
+  const outerStroke = circle(context, {
+    fill: 'transparent',
+    stroke: stroke || fill,
+    strokeWidth,
+    cx,
+    cy,
+    r: r2,
+  });
+  return [innerStroke, ring, outerStroke];
+}
+
+export function shape(type, context, attributes) {
   const { group } = context;
   const el = createSVGElement(type);
   applyAttributes(el, attributes);
