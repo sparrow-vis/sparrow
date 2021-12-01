@@ -1,7 +1,7 @@
 import { createBand } from '../../src/scale';
 
-describe('test Band', () => {
-  test('createBand(options) return mapper maps discrete domain to continuous range.', () => {
+describe('createBand', () => {
+  test('createBand(options) returns scale mapping discrete domain to continuous range', () => {
     const s = createBand({
       domain: ['a', 'b', 'c'],
       range: [0, 32],

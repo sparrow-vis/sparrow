@@ -14,17 +14,14 @@ export function createLinear({
 
   scale.ticks = (tickCount) => ticks(d0, d1, tickCount);
   scale.nice = (tickCount) => {
-    [d0, d1] = linearNice([d0, d1], tickCount);
+    const step = tickStep(d0, d1, tickCount);
+    [d0, d1] = nice([d0, d1], {
+      floor: (x) => floor(x, step),
+      ceil: (x) => ceil(x, step),
+    });
   };
-  return scale;
-}
 
-export function linearNice([min, max], tickCount) {
-  const step = tickStep(min, max, tickCount);
-  return nice([min, max], {
-    floor: (x) => floor(x, step),
-    ceil: (x) => ceil(x, step),
-  });
+  return scale;
 }
 
 export function interpolateNumber(t, start, stop) {

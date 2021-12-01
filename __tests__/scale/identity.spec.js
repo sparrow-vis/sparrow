@@ -1,7 +1,7 @@
 import { createIdentity } from '../../src/scale';
 
-describe('test Identity', () => {
-  test('createIdentity() returns a identity function.', () => {
+describe('createIdentity', () => {
+  test('createIdentity() returns a identity function', () => {
     const s = createIdentity();
 
     expect(s(1)).toBe(1);

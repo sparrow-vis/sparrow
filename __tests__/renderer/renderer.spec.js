@@ -3,7 +3,7 @@ import { mount } from '../../src/renderer/utils';
 import { createDiv } from '../utils';
 
 describe('createRenderer', () => {
-  test('createContext(width, height) returns expected context', () => {
+  test('createContext(width, height) returns expected context.', () => {
     const renderer = createRenderer(600, 400);
     const node = renderer.node();
     const group = renderer.group();
