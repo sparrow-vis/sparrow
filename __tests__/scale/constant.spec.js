@@ -1,7 +1,7 @@
 import { createConstant } from '../../src/scale';
 
-describe('test Constant', () => {
-  test('createConstant() returns a identity function.', () => {
+describe('createConstant', () => {
+  test('createConstant() returns a constant function', () => {
     const s = createConstant({ domain: [1] });
 
     expect(s(1)).toBe(1);

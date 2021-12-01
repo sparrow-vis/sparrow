@@ -31,6 +31,10 @@ export function round(n) {
   return Math.round(n * 1e12) / 1e12;
 }
 
+export function log(n, base) {
+  return Math.log(n) / Math.log(base);
+}
+
 export function tickStep(min, max, count) {
   const e10 = Math.sqrt(50);
   const e5 = Math.sqrt(10);

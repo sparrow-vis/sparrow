@@ -1,7 +1,7 @@
 import { createOrdinal } from '../../src/scale';
 
-describe('test Ordinal', () => {
-  test('createOrdinal(options) returns a one-to-one mapper.', () => {
+describe('createOrdinal', () => {
+  test('createOrdinal(options) returns a one-to-one scale.', () => {
     const s = createOrdinal({
       domain: ['a', 'b', 'c'],
       range: ['red', 'yellow', 'blue'],
@@ -11,7 +11,7 @@ describe('test Ordinal', () => {
     expect(s('c')).toBe('blue');
   });
 
-  test('createOrdinal(options) will mod map.', () => {
+  test('Ordinal scale will mode map.', () => {
     const s = createOrdinal({
       domain: ['a', 'b', 'c', 'd', 'e'],
       range: ['red', 'yellow', 'blue'],

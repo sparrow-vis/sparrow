@@ -3,7 +3,7 @@ import { mount } from '../../src/renderer/utils';
 import { createDiv } from '../utils';
 
 describe('transform', () => {
-  test('Renderer should apply specified transforms and can save or restore transforms context', () => {
+  test('Renderer should apply specified transforms and can save or restore transforms context.', () => {
     const renderer = createRenderer(600, 400);
 
     renderer.save();

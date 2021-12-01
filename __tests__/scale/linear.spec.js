@@ -1,7 +1,20 @@
-import { createLinear, interpolateNumber, linearNice } from '../../src/scale';
-import { ticks } from '../../src/scale/utils';
+import { createLinear, interpolateNumber } from '../../src/scale';
 
-describe('test Linear', () => {
+function nice(domain, niceDomain, tickCount) {
+  const scale = createLinear({
+    domain,
+    range: [0, 1],
+  });
+  scale.nice(tickCount);
+  const [r0, r1] = niceDomain.map(scale);
+  return r0 === 0 && r1 === 1;
+}
+
+function ticks(domain, tickCount) {
+  return createLinear({ domain, range: [0, 1] }).ticks(tickCount);
+}
+
+describe('createLinear', () => {
   test('createLinear(options) returns a a linear function.', () => {
     const s = createLinear({
       domain: [0, 1],
@@ -34,37 +47,25 @@ describe('test Linear', () => {
     expect(s(0.5)).toBe('m');
   });
 
-  test('linearNice(domain, tickCount) extends domain for better ticks.', () => {
-    expect(linearNice([1.1, 10.9], 10)).toEqual([1, 11]);
-    expect(linearNice([0.7, 11.001], 10)).toEqual([0, 12]);
-    expect(linearNice([0, 0.49], 10)).toEqual([0, 0.5]);
-    expect(linearNice([12, 87], 5)).toEqual([0, 100]);
-    expect(linearNice([12, 87], 10)).toEqual([10, 90]);
-    expect(linearNice([12, 87], 100)).toEqual([12, 87]);
+  test('scale.nice(tickCount) extends domain for better ticks.', () => {
+    expect(nice([1.1, 10.9], [1, 11], 10)).toBeTruthy();
+    expect(nice([0.7, 11.001], [0, 12], 10)).toBeTruthy();
+    expect(nice([0, 0.49], [0, 0.5], 10)).toBeTruthy();
+    expect(nice([12, 87], [0, 100], 5)).toBeTruthy();
+    expect(nice([12, 87], [10, 90], 10)).toBeTruthy();
+    expect(nice([12, 87], [12, 87], 100)).toBeTruthy();
   });
 
-  test('linearTicks(domain, tickCount) return ticks in 1, 2, 5 * 10 ^ n format', () => {
-    const ticks10 = ticks(0, 1, 10);
-    const ticks9 = ticks(0, 1, 9);
-    const ticks8 = ticks(0, 1, 9);
-    const ticks7 = ticks(0, 1, 7);
-    const ticks6 = ticks(0, 1, 6);
-    const ticks5 = ticks(0, 1, 5);
-    const ticks4 = ticks(0, 1, 4);
-    const ticks3 = ticks(0, 1, 3);
-    const ticks2 = ticks(0, 1, 2);
-    const ticks1 = ticks(0, 1, 1);
-    expect(ticks10).toEqual([
-      0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1,
-    ]);
-    expect(ticks9).toEqual([0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]);
-    expect(ticks8).toEqual([0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]);
-    expect(ticks7).toEqual([0, 0.2, 0.4, 0.6, 0.8, 1]);
-    expect(ticks6).toEqual([0, 0.2, 0.4, 0.6, 0.8, 1]);
-    expect(ticks5).toEqual([0, 0.2, 0.4, 0.6, 0.8, 1]);
-    expect(ticks4).toEqual([0, 0.2, 0.4, 0.6, 0.8, 1]);
-    expect(ticks3).toEqual([0, 0.5, 1]);
-    expect(ticks2).toEqual([0, 0.5, 1]);
-    expect(ticks1).toEqual([0, 1]);
+  test('scale.ticks() return ticks in 1, 2, 5 * 10 ^ n format', () => {
+    expect(ticks([0, 1], 10)).toEqual([0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]);
+    expect(ticks([0, 1], 9)).toEqual([0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]);
+    expect(ticks([0, 1], 8)).toEqual([0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]);
+    expect(ticks([0, 1], 7)).toEqual([0, 0.2, 0.4, 0.6, 0.8, 1]);
+    expect(ticks([0, 1], 6)).toEqual([0, 0.2, 0.4, 0.6, 0.8, 1]);
+    expect(ticks([0, 1], 5)).toEqual([0, 0.2, 0.4, 0.6, 0.8, 1]);
+    expect(ticks([0, 1], 4)).toEqual([0, 0.2, 0.4, 0.6, 0.8, 1]);
+    expect(ticks([0, 1], 3)).toEqual([0, 0.5, 1]);
+    expect(ticks([0, 1], 2)).toEqual([0, 0.5, 1]);
+    expect(ticks([0, 1], 1)).toEqual([0, 1]);
   });
 });

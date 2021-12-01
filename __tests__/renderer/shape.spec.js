@@ -4,7 +4,7 @@ import { mount } from '../../src/renderer/utils';
 import { createDiv, getAttributes } from '../utils';
 
 describe('shapes', () => {
-  test('shape(name, context, attributes) creates SVG elements width specified attributes and mounts it to group', () => {
+  test('shape(name, context, attributes) creates SVG elements width specified attributes and mounts it to group.', () => {
     const renderer = createRenderer(600, 400);
     const context = { group: renderer.group() };
 
@@ -31,7 +31,7 @@ describe('shapes', () => {
     });
   });
 
-  test('circle() creates circle element', () => {
+  test('circle() creates circle element.', () => {
     const renderer = createRenderer(600, 400);
 
     const circle = renderer.circle({
@@ -47,7 +47,7 @@ describe('shapes', () => {
     expect(circle.tagName).toBe('circle');
   });
 
-  test('rect() creates rect element and accepts negative width and height', () => {
+  test('rect() creates rect element and accepts negative width and height.', () => {
     const renderer = createRenderer(600, 400);
 
     const rect = renderer.rect({
@@ -67,7 +67,7 @@ describe('shapes', () => {
     expect(rect.tagName).toBe('rect');
   });
 
-  test('line() creates line element', () => {
+  test('line() creates line element.', () => {
     const renderer = createRenderer(600, 400);
     const line = renderer.line({
       x1: 0,
@@ -80,7 +80,7 @@ describe('shapes', () => {
     expect(line.tagName).toBe('line');
   });
 
-  test('text() creates text element and sets textContent', () => {
+  test('text() creates text element and sets textContent.', () => {
     const renderer = createRenderer(600, 400);
     const text = renderer.text({
       x: 100,
@@ -92,7 +92,7 @@ describe('shapes', () => {
     expect(text.textContent).toBe('hello world');
   });
 
-  test('path() creates path element and accepts array to specify path', () => {
+  test('path() creates path element and accepts array to specify path.', () => {
     const renderer = createRenderer(600, 400);
     const d = [
       ['M', 10, 10],
@@ -110,7 +110,7 @@ describe('shapes', () => {
     expect(path.getAttribute('d')).toBe('M 10 10 L 100 100 L 100 10 Z');
   });
 
-  test('ring() creates three circle elements to simulate a ring', () => {
+  test('ring() creates three circle elements to simulate a ring.', () => {
     const renderer = createRenderer(600, 400);
     const ring = renderer.ring({
       cx: 100,
