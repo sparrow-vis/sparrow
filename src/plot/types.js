@@ -13,6 +13,7 @@ export const Chart = {
   height: item(),
   style: object(),
   statistic: array(),
+  renderer: item(),
 };
 
 export const Encode = {

@@ -29,40 +29,15 @@ export function rect(renderer, [v0, v1, v2, v3], coordinate, styles) {
     });
   }
 
-  const r = dist(center, ps[0]);
   const r1 = dist(center, ps[2]);
-  return cirque(renderer, center[0], center[1], r, r1, styles);
-}
-
-export function cirque(renderer, x, y, r, r1, styles) {
-  const { stroke, strokeWidth, fill } = styles;
-  const innerStroke = renderer.circle({
-    fill: 'transparent',
-    stroke: stroke || fill,
-    strokeWidth,
-    cx: x,
-    cy: y,
-    r: r1,
-  });
-  const ring = renderer.circle({
+  const r2 = dist(center, ps[0]);
+  return renderer.ring({
+    cx: center[0],
+    cy: center[1],
+    r1,
+    r2,
     ...styles,
-    strokeWidth: r - r1 - (strokeWidth || 1),
-    stroke: fill,
-    fill: 'transparent',
-    cx: x,
-    cy: y,
-    r: r1 + (r - r1) / 2,
   });
-  const outerStroke = renderer.circle({
-    fill: 'transparent',
-    stroke: stroke || fill,
-    strokeWidth,
-    cx: x,
-    cy: y,
-    r,
-  });
-
-  return [innerStroke, ring, outerStroke];
 }
 
 export function rectLabel(renderer, label, [v0, , v2], coordinate, styles) {
