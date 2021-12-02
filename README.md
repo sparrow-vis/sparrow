@@ -5,6 +5,7 @@
 Sparrow is a tiny plot library based on the grammar of graphics for learning purpose. It aims at helping people to better understand visualization and making it easier for them to choose the the suitable visualization library for their analysis task.
 
 ![](https://gw.alipayobjects.com/mdn/rms_38d0f7/afts/img/A*YLU0Q4RDo00AAAAAAAAAAAAAARQnAQ)
+![](https://gw.alipayobjects.com/mdn/rms_38d0f7/afts/img/A*qifaQ5Lp8aoAAAAAAAAAAAAAARQnAQ)
 
 ![](https://gw.alipayobjects.com/mdn/rms_38d0f7/afts/img/A*romnSZgAWacAAAAAAAAAAAAAARQnAQ)
 
@@ -84,6 +85,39 @@ document.getElementById("container").appendChild(chart);
 
 ![example](https://gw.alipayobjects.com/mdn/rms_38d0f7/afts/img/A*_TboQJxCmwEAAAAAAAAAAAAAARQnAQ)
 
+- Plot in a sketchy, hand-drawn-like, style.
+
+```
+$ npm i @sparrow-vis/rough-renderer
+```
+
+```js
+import { plot } from "@sparrow-vis/sparrow";
+import { createRenderer } from "@sparrow-vis/rough-renderer"
+
+const data = [
+  { genre: "Sports", sold: 275 },
+  { genre: "Strategy", sold: 115 },
+  { genre: "Action", sold: 120 },
+  { genre: "Shooter", sold: 350 },
+  { genre: "Other", sold: 150 },
+];
+
+const chart = plot({
+  data,
+  element: "interval",
+  renderer: createRenderer, // Use Custom Renderer
+  encode: [
+    { channel: "x", field: "genre" },
+    { channel: "y", field: "sold" },
+    { channel: "fill", field: "genre" },
+  ],
+});
+
+document.getElementById("container").appendChild(chart);
+```
+
+![](https://gw.alipayobjects.com/mdn/rms_38d0f7/afts/img/A*8M-5SrtEWncAAAAAAAAAAAAAARQnAQ)
 ## 😝 Thanks
 
 The API design is inspired by the following awesome projects [G2](https://github.com/antvis/G2), [Vega-Lite API](https://github.com/vega/vega-lite-api) and [Observable Plot](https://github.com/observablehq/plot).
