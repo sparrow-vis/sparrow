@@ -27,7 +27,7 @@ export function useOptions(options) {
   if (Array.isArray(options)) return [...options.map(useOptions)];
   return Object
     .entries(options)
-    .filter(([, value]) => typeof value !== 'function' || value.$setter !== true)
+    .filter(([, value]) => !value || (value && value.$setter !== true))
     .reduce((obj, [key, value]) => (obj[decodeKey(key)] = useOptions(value), obj), {});
 }
 

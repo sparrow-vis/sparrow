@@ -19,6 +19,7 @@ export function plot({
   statistic: statisticDescriptors = [],
   guide: guidesDescriptors = [],
   style = {},
+  renderer: customCreateRenderer,
   ...options
 }) {
   const index = range(data);
@@ -50,7 +51,8 @@ export function plot({
     height: chartHeight,
     transforms: fromTransform(transformDescriptors),
   });
-  const renderer = createRenderer(width, height);
+
+  const renderer = (customCreateRenderer || createRenderer)(width, height);
 
   geometry({
     index, renderer, values: scaledValues, scales, coordinate, directStyles: style,
