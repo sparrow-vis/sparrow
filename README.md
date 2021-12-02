@@ -85,7 +85,7 @@ document.getElementById("container").appendChild(chart);
 
 ![example](https://gw.alipayobjects.com/mdn/rms_38d0f7/afts/img/A*_TboQJxCmwEAAAAAAAAAAAAAARQnAQ)
 
-- Plot in a sketchy, hand-drawn-like, style.
+- Plot in a sketchy, hand-drawn-like, style.([@sparrow-vis/rough-renderer](https://github.com/sparrow-vis/rough-renderer))
 
 ```
 $ npm i @sparrow-vis/rough-renderer
