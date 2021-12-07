@@ -1,5 +1,5 @@
 import {
-  createBand, createConstant, createIdentity, createLinear, createOrdinal,
+  createBand, createIdentity, createLinear, createOrdinal,
 } from '../scale';
 import {
   unique, min, max, fromObject,
@@ -51,8 +51,6 @@ function inferScale(value, channel, transforms, options = {}) {
       return inferLinear(value, channel, transforms, options);
     case 'ordinal':
       return inferOrdinal(value, channel, transforms, options);
-    case 'constant':
-      return inferConstant(value, channel, transforms, options);
     case 'identity':
       return inferIdentity(value, channel, transforms, options);
     default:
@@ -84,7 +82,7 @@ function inferScaleType(value, channel, option) {
   const { constant } = value;
   const { scaleType, type, scale } = channel;
   const { type: customScaleType, domain, range } = option;
-  if (constant && scale === 'color') return 'constant';
+  if (constant && scale === 'color') return 'identity';
   if (scaleType) return scaleType;
   if (customScaleType) return customScaleType;
   if ((domain || range || []).length > 2) return asOrdinalType(type);
@@ -143,17 +141,6 @@ function inferLinear(
     creator: createLinear,
     type: 'quantitative',
     options: { domain, range, ...rest },
-  };
-}
-
-function inferConstant([v], scale, { domain = [v], range = [v] }) {
-  return {
-    creator: createConstant,
-    type: isOrdinal([v]) ? 'ordinal' : 'quantitative',
-    options: {
-      domain,
-      range,
-    },
   };
 }
 

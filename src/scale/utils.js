@@ -4,10 +4,11 @@ export function band({ domain, range, padding }) {
   const step = (r1 - r0) / (n + padding);
   const bandWidth = step * (1 - padding);
   const interval = step - bandWidth;
+  const x = (_, i) => r0 + interval + step * i;
   return {
     step,
     bandWidth,
-    bandRange: new Array(n).fill(0).map((_, i) => r0 + interval + step * i),
+    bandRange: new Array(n).fill(0).map(x),
   };
 }
 
@@ -35,6 +36,7 @@ export function log(n, base) {
   return Math.log(n) / Math.log(base);
 }
 
+// @see https://github.com/d3/d3-array/blob/main/src/ticks.js#L46
 export function tickStep(min, max, count) {
   const e10 = Math.sqrt(50);
   const e5 = Math.sqrt(10);

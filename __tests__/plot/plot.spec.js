@@ -39,7 +39,7 @@ describe('plot', () => {
       encode: [
         { channel: 'x', field: 'genre' },
         { channel: 'y', field: 'sold' },
-        { channel: 'fill', field: 'genre' },
+        { channel: 'fill', value: 'steelblue' },
       ],
     });
 
