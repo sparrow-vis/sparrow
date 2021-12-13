@@ -1,7 +1,9 @@
-import { reflectX, translate } from './affine';
+import { curry } from '../utils';
+import { reflectX, translate, transpose as transform } from './transforms';
 
-export function transpose() {
-  return () => [
+// eslint-disable-next-line no-unused-vars
+function coordinate(transformOptions, coordinateOptions) {
+  return [
     transform(),
     translate(-0.5, -0.5),
     reflectX(),
@@ -9,9 +11,4 @@ export function transpose() {
   ];
 }
 
-function transform() {
-  return {
-    type: 'transpose',
-    transform: ([px, py]) => [py, px],
-  };
-}
+export const transpose = curry(coordinate);

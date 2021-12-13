@@ -1,16 +1,14 @@
-import { createLinear } from '../scale';
+import { curry } from '../utils';
+import { scale, translate } from './transforms';
 
-export function cartesian() {
-  return ({
+function coordinate(transformOptions, coordinateOptions) {
+  const {
     x, y, width, height,
-  }) => transform(x, y, width, height);
+  } = coordinateOptions;
+  return [
+    scale(width, height),
+    translate(x, y),
+  ];
 }
 
-function transform(x, y, width, height) {
-  const tx = createLinear({ domain: [0, 1], range: [x, x + width] });
-  const ty = createLinear({ domain: [0, 1], range: [y, y + height] });
-  return {
-    type: 'cartesian',
-    transform: ([px, py]) => [tx(px), ty(py)],
-  };
-}
+export const cartesian = curry(coordinate);
