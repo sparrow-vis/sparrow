@@ -2,16 +2,15 @@ import { compose, identity } from '../utils';
 
 export function createCoordinate({
   x, y, width, height,
-  transforms: createTransforms,
+  transforms: coordinates,
 }) {
-  const coordinates = createTransforms
-    .map((createTransform) => createTransform({
+  const transforms = coordinates
+    .map((coordinate) => coordinate({
       x, y, width, height,
     }))
     .flat();
 
-  const types = coordinates.map((d) => d.type);
-  const transforms = coordinates.map((d) => d.transform);
+  const types = transforms.map((d) => d.type());
   const output = transforms.length ? compose(...transforms) : identity;
 
   output.isPolar = () => types.indexOf('polar') !== -1;
