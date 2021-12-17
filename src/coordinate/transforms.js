@@ -1,32 +1,5 @@
-import { createLinear } from '../scale';
-
 export function transpose() {
   return transform('transpose', ([px, py]) => [py, px]);
-}
-
-export function polar(
-  {
-    innerRadius,
-    outerRadius,
-    startAngle,
-    endAngle,
-  },
-) {
-  const radius = createLinear({
-    domain: [0, 1],
-    range: [innerRadius, outerRadius],
-  });
-  const angle = createLinear({
-    domain: [0, 1],
-    range: [startAngle, endAngle],
-  });
-  return transform('polar', ([px, py]) => {
-    const theta = angle(px);
-    const r = radius(py);
-    const vx = r * Math.cos(theta);
-    const vy = r * Math.sin(theta);
-    return [vx, vy];
-  });
 }
 
 export function translate(tx = 0, ty = 0) {
@@ -38,15 +11,23 @@ export function scale(sx = 1, sy = 1) {
 }
 
 export function reflect() {
-  return transform('reflect', (point) => scale(-1, -1)(point));
+  return transform('reflect', scale(-1, -1));
 }
 
 export function reflectX() {
-  return transform('reflectX', (point) => scale(-1, 1)(point));
+  return transform('reflectX', scale(-1, 1));
 }
 
 export function reflectY() {
-  return transform('reflectY', (point) => scale(1, -1)(point));
+  return transform('reflectY', scale(1, -1));
+}
+
+export function polar() {
+  return transform('polar', ([theta, radius]) => {
+    const x = radius * Math.cos(theta);
+    const y = radius * Math.sin(theta);
+    return [x, y];
+  });
 }
 
 function transform(type, transformer) {

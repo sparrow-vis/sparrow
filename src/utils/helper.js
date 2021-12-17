@@ -2,14 +2,15 @@ export function identity(x) {
   return x;
 }
 
-export function compose(fn, ...rest) {
-  return rest.reduce((total, cur) => (x) => cur(total(x)), fn);
+export function compose(...fns) {
+  return fns.reduce((total, cur) => (x) => cur(total(x)), identity);
 }
 
 export function curry(fn) {
+  const arity = fn.length;
   return function curried(...args) {
-    if (args.length === 0) args = [undefined];
-    if (args.length >= fn.length) return fn(...args);
-    return (...rest) => curried(...args, ...rest);
+    const newArgs = args.length === 0 ? [undefined] : args;
+    if (newArgs.length >= arity) return fn(...newArgs);
+    return curried.bind(null, ...newArgs);
   };
 }

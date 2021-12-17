@@ -93,7 +93,7 @@ export function titleOf([x, y], coordinate, title, direction) {
 }
 
 export function rotationOf([x, y], coordinate) {
-  const center = coordinate.getCenter();
+  const center = coordinate.center();
   const tickRotation = angle(sub([x, y], center));
   const textRotation = tickRotation < 0 ? Math.PI : 0;
   return [tickRotation - Math.PI / 2, textRotation];
