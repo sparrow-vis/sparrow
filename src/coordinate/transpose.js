@@ -1,10 +1,10 @@
 import { curry } from '../utils';
-import { reflectX, translate, transpose as transform } from './transforms';
+import { reflectX, translate, transpose as transposeT } from './transforms';
 
 // eslint-disable-next-line no-unused-vars
-function coordinate(transformOptions, coordinateOptions) {
+function coordinate(transformOptions, canvasOptions) {
   return [
-    transform(),
+    transposeT(),
     translate(-0.5, -0.5),
     reflectX(),
     translate(0.5, 0.5),

@@ -1,30 +1,20 @@
-import { compose, identity } from '../utils';
+import { compose } from '../utils';
 
 export function createCoordinate({
   x, y, width, height,
-  transforms: coordinates,
+  transforms: coordinates = [],
 }) {
   const transforms = coordinates
     .map((coordinate) => coordinate({
       x, y, width, height,
     }))
     .flat();
-
   const types = transforms.map((d) => d.type());
-  const output = transforms.length ? compose(...transforms) : identity;
+  const output = compose(...transforms);
 
   output.isPolar = () => types.indexOf('polar') !== -1;
-
-  output.isTranspose = () => {
-    const count = types.filter((d) => d === 'transpose').length;
-    return count % 2 !== 0;
-  };
-
-  output.getCenter = () => {
-    const cx = x + width / 2;
-    const cy = y + height / 2;
-    return [cx, cy];
-  };
+  output.isTranspose = () => types.reduce((is, type) => is ^ (type === 'transpose'), false);
+  output.center = () => [x + width / 2, y + height / 2];
 
   return output;
 }

@@ -1,10 +1,10 @@
 import { curry } from '../utils';
 import { scale, translate } from './transforms';
 
-function coordinate(transformOptions, coordinateOptions) {
+function coordinate(transformOptions, canvasOptions) {
   const {
     x, y, width, height,
-  } = coordinateOptions;
+  } = canvasOptions;
   return [
     scale(width, height),
     translate(x, y),

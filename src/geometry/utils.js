@@ -15,7 +15,7 @@ export function rect(renderer, [v0, v1, v2, v3], coordinate, styles) {
     });
   }
 
-  const center = coordinate.getCenter();
+  const center = coordinate.center();
   const vs = coordinate.isTranspose()
     ? [v3, v0, v1, v2]
     : [v0, v1, v2, v3];
