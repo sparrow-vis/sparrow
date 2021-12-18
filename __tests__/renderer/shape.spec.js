@@ -110,54 +110,54 @@ describe('shapes', () => {
     expect(path.getAttribute('d')).toBe('M 10 10 L 100 100 L 100 10 Z');
   });
 
-  test('ring() creates three circle elements to simulate a ring.', () => {
-    const renderer = createRenderer(600, 400);
-    const ring = renderer.ring({
-      cx: 100,
-      cy: 100,
-      r1: 30,
-      r2: 60,
-      strokeWidth: 10,
-      stroke: 'red',
-      fill: 'blue',
-    });
-    const [c0, c1, c2] = ring;
+  // test('ring() creates three circle elements to simulate a ring.', () => {
+  //   const renderer = createRenderer(600, 400);
+  //   const ring = renderer.ring({
+  //     cx: 100,
+  //     cy: 100,
+  //     r1: 30,
+  //     r2: 60,
+  //     strokeWidth: 10,
+  //     stroke: 'red',
+  //     fill: 'blue',
+  //   });
+  //   const [c0, c1, c2] = ring;
 
-    mount(createDiv(), renderer.node());
-    expect(c0.tagName).toBe('circle');
-    expect(getAttributes(c0, ['fill', 'stroke', 'stroke-width', 'r'])).toEqual({
-      fill: 'transparent',
-      stroke: 'red',
-      'stroke-width': '10',
-      r: '30',
-    });
+  //   mount(createDiv(), renderer.node());
+  //   expect(c0.tagName).toBe('circle');
+  //   expect(getAttributes(c0, ['fill', 'stroke', 'stroke-width', 'r'])).toEqual({
+  //     fill: 'transparent',
+  //     stroke: 'red',
+  //     'stroke-width': '10',
+  //     r: '30',
+  //   });
 
-    expect(c1.tagName).toBe('circle');
-    expect(getAttributes(c1, ['fill', 'stroke', 'stroke-width', 'r'])).toEqual({
-      fill: 'transparent',
-      stroke: 'blue',
-      'stroke-width': '20',
-      r: '45',
-    });
+  //   expect(c1.tagName).toBe('circle');
+  //   expect(getAttributes(c1, ['fill', 'stroke', 'stroke-width', 'r'])).toEqual({
+  //     fill: 'transparent',
+  //     stroke: 'blue',
+  //     'stroke-width': '20',
+  //     r: '45',
+  //   });
 
-    expect(c2.tagName).toBe('circle');
-    expect(getAttributes(c2, ['fill', 'stroke', 'stroke-width', 'r'])).toEqual({
-      fill: 'transparent',
-      stroke: 'red',
-      'stroke-width': '10',
-      r: '60',
-    });
+  //   expect(c2.tagName).toBe('circle');
+  //   expect(getAttributes(c2, ['fill', 'stroke', 'stroke-width', 'r'])).toEqual({
+  //     fill: 'transparent',
+  //     stroke: 'red',
+  //     'stroke-width': '10',
+  //     r: '60',
+  //   });
 
-    const [c3] = renderer.ring({
-      cx: 200,
-      cy: 200,
-      r1: 30,
-      r2: 60,
-      strokeWidth: 10,
-      fill: 'blue',
-    });
-    expect(getAttributes(c3, ['stroke'])).toEqual({
-      stroke: 'blue',
-    });
-  });
+  //   const [c3] = renderer.ring({
+  //     cx: 200,
+  //     cy: 200,
+  //     r1: 30,
+  //     r2: 60,
+  //     strokeWidth: 10,
+  //     fill: 'blue',
+  //   });
+  //   expect(getAttributes(c3, ['stroke'])).toEqual({
+  //     stroke: 'blue',
+  //   });
+  // });
 });

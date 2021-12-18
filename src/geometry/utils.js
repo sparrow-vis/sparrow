@@ -31,13 +31,39 @@ export function rect(renderer, [v0, v1, v2, v3], coordinate, styles) {
 
   const r1 = dist(center, ps[2]);
   const r2 = dist(center, ps[0]);
-  return renderer.ring({
-    cx: center[0],
-    cy: center[1],
-    r1,
-    r2,
-    ...styles,
+  return ring(renderer, center[0], center[1], r1, r2, styles);
+}
+
+export function ring(renderer, x, y, r1, r2, styles) {
+  const { stroke, strokeWidth, fill } = styles;
+  const defaultStrokeWidth = 1;
+  const innerStroke = renderer.circle({
+    fill: 'transparent',
+    stroke: stroke || fill,
+    strokeWidth,
+    cx: x,
+    cy: y,
+    r: r1,
   });
+  const ring = renderer.circle({
+    ...styles,
+    strokeWidth: r2 - r1 - (strokeWidth || defaultStrokeWidth),
+    stroke: fill,
+    fill: 'transparent',
+    cx: x,
+    cy: y,
+    r: r1 + (r2 - r1) / 2,
+  });
+  const outerStroke = renderer.circle({
+    fill: 'transparent',
+    stroke: stroke || fill,
+    strokeWidth,
+    cx: x,
+    cy: y,
+    r: r2,
+  });
+
+  return [innerStroke, ring, outerStroke];
 }
 
 export function rectLabel(renderer, label, [v0, , v2], coordinate, styles) {
