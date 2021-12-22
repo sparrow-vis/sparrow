@@ -2,7 +2,7 @@ import {
   createCoordinate,
 } from '../../src/coordinate';
 
-describe('Test Coordinate', () => {
+describe('coordinate', () => {
   test('createCoordinate(options) returns a identity function without transforms', () => {
     const c = createCoordinate({
       transforms: [],

@@ -5,9 +5,7 @@ export function line(context, attributes) {
 }
 
 export function rect(context, attributes) {
-  const {
-    width, height, x, y,
-  } = attributes;
+  const { width, height, x, y } = attributes;
 
   return shape('rect', context, {
     ...attributes,
