@@ -2,7 +2,7 @@ import {
   createCoordinate, cartesian, transpose,
 } from '../../src/coordinate';
 
-describe('Test Transpose', () => {
+describe('transpose', () => {
   test('transpose()', () => {
     const c = createCoordinate({
       width: 200,

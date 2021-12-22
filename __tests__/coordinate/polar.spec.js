@@ -2,7 +2,7 @@ import {
   createCoordinate, cartesian, polar,
 } from '../../src/coordinate';
 
-describe('Test Polar', () => {
+describe('polar', () => {
   test('polar()', () => {
     const c1 = createCoordinate({
       width: 300,

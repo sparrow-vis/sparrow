@@ -5,9 +5,7 @@ import { curry } from '../utils/helper';
 
 function coordinate(transformOptions, canvasOptions) {
   const { width, height } = canvasOptions;
-  const {
-    innerRadius, outerRadius, startAngle, endAngle,
-  } = transformOptions;
+  const { innerRadius, outerRadius, startAngle, endAngle } = transformOptions;
   const aspect = width / height;
   const sx = aspect > 1 ? 1 / aspect : 1;
   const sy = aspect > 1 ? 1 : aspect;

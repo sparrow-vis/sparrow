@@ -5,9 +5,7 @@ export function createCoordinate({
   transforms: coordinates = [],
 }) {
   const transforms = coordinates
-    .map((coordinate) => coordinate({
-      x, y, width, height,
-    }))
+    .map((coordinate) => coordinate({ x, y, width, height }))
     .flat();
   const types = transforms.map((d) => d.type());
   const output = compose(...transforms);
