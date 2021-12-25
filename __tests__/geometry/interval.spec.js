@@ -1,89 +1,78 @@
 import {
-  cartesian, createCoordinate, polar, transpose,
+  cartesian, polar, transpose,
 } from '../../src/coordinate';
-import { createInterval } from '../../src/geometry';
-import { createRenderer } from '../../src/renderer';
-import { mount } from '../../src/renderer/utils';
+import { interval } from '../../src/geometry';
 import { createBand } from '../../src/scale';
-import { createDiv, getAttributes } from '../utils';
+import { plot } from './utils';
 
-describe('Test interval', () => {
-  const width = 600;
-  const height = 400;
-  const index = [0, 1, 2];
-  const directStyles = {
-    stroke: 'black',
-  };
-  const scales = {
-    x: createBand({
-      domain: ['a', 'b', 'c'],
-      range: [0, 1],
-      padding: 0.2,
-    }),
-  };
-  const values = {
-    fill: ['red', 'blue', 'yellow'],
-    x: [0, 1 / 3, 2 / 3],
-    y: [0.6, 0.4, 0.2],
-    y1: [1, 1, 1],
-  };
-  const interval = createInterval();
-
-  test('channels', () => {
+describe('interval', () => {
+  test('interval has expected channels', () => {
     const channels = interval.channels();
     expect(channels).toEqual({
-      x: {
-        name: 'x', type: 'position', optional: false, scaleType: 'band', scale: 'x',
-      },
-      y: {
-        name: 'y', type: 'position', optional: false, scale: 'y',
-      },
-      y1: {
-        name: 'y1', type: 'position', optional: false, scale: 'y',
-      },
-      fill: {
-        name: 'fill', type: 'color', optional: true, scale: 'color',
-      },
-      stroke: {
-        name: 'stroke', type: 'color', optional: true, scale: 'color',
-      },
-      label: {
-        name: 'label',
-        optional: true,
-        scale: 'text',
-        scaleType: 'identity',
-        type: 'text',
-      },
+      x: { name: 'x', type: 'band', optional: false, scale: 'x' },
+      y: { name: 'y', optional: false, scale: 'y' },
+      z: { name: 'z', optional: true, type: 'band' },
+      y1: { name: 'y1', optional: false, scale: 'y' },
+      fill: { name: 'fill', optional: true, scale: 'color' },
+      stroke: { name: 'stroke', optional: true, scale: 'color' },
     });
   });
 
-  test('cartesian', () => {
-    const renderer = createRenderer(width, height);
-    const coordinate = createCoordinate({
-      width,
-      height,
-      x: 0,
-      y: 0,
-      transforms: [cartesian()],
-    });
-
-    const rects = interval({
-      renderer,
-      index,
-      coordinate,
-      directStyles,
-      values,
-      scales,
-    });
-
-    mount(createDiv(), renderer.node());
-
-    const attributes = ['fill', 'x', 'y', 'stroke', 'width', 'height'];
-    const r0 = rects[0];
-    expect(r0.tagName).toBe('rect');
-    expect(getAttributes(r0, attributes)).toEqual({
+  test('column chart for x, y, fill channels', () => {
+    plot({
+      geometry: interval,
+      index: [0, 1, 2],
+      scales: {
+        x: createBand({
+          domain: ['a', 'b', 'c'],
+          range: [0, 1],
+          padding: 0.2,
+        }),
+      },
+      styles: {
+        stroke: 'black',
+      },
+      channels: {
+        fill: ['#5B8FF9', '#5AD8A6', '#5D7092'],
+        x: [0, 1 / 3, 2 / 3],
+        y: [0.6, 0.4, 0.2],
+        y1: [1, 1, 1],
+      },
+    }).toHasAttributes({
       stroke: 'black',
-      fill: 'red',
+      fill: '#5B8FF9',
+      x: '0',
+      y: '240',
+      width: '150',
+      height: '160',
+      tagName: 'rect',
+    });
+  });
+
+  test('stack column for y and y1 channels', () => {
+    plot({
+      geometry: interval,
+      index: [0, 1, 2, 3, 4, 5],
+      styles: {
+        stroke: 'black',
+      },
+      scales: {
+        x: createBand({
+          domain: ['a', 'b', 'c'],
+          range: [0, 1],
+          padding: 0.2,
+        }),
+      },
+      channels: {
+        fill: ['#5B8FF9', '#5B8FF9', '#5B8FF9', '#5AD8A6', '#5AD8A6', '#5AD8A6'],
+        x: [0, 1 / 3, 2 / 3, 0, 1 / 3, 2 / 3],
+        y: [0.6, 0.5, 0.8, 0.3, 0.2, 0.3],
+        y1: [1, 1, 1, 0.6, 0.5, 0.8],
+      },
+    }).toHasAttributes({
+      tagName: 'rect',
+      stroke: 'black',
+      fill: '#5B8FF9',
       x: '0',
       y: '240',
       width: '150',
@@ -91,107 +80,156 @@ describe('Test interval', () => {
     });
   });
 
-  test('transpose', () => {
-    const renderer = createRenderer(width, height);
-    const coordinate = createCoordinate({
-      width,
-      height,
-      x: 0,
-      y: 0,
-      transforms: [transpose(), cartesian()],
-    });
-    const rects = interval({
-      renderer,
-      index,
-      coordinate,
-      directStyles,
-      values,
-      scales,
-    });
-    const r0 = rects[0];
-    expect(r0.tagName).toBe('rect');
-    const attributes = ['fill', 'x', 'y', 'stroke', 'width', 'height'];
-    expect(getAttributes(r0, attributes)).toEqual({
+  test('group column for z channels', () => {
+    plot({
+      geometry: interval,
+      index: [0, 1, 2, 3, 4, 5],
+      styles: {
+        stroke: 'black',
+      },
+      scales: {
+        x: createBand({
+          domain: ['a', 'b', 'c'],
+          range: [0, 1],
+          padding: 0.1,
+        }),
+        z: createBand({
+          domain: ['1', '2'],
+          range: [0, 1],
+          padding: 0.1,
+        }),
+      },
+      channels: {
+        fill: ['#5B8FF9', '#5B8FF9', '#5B8FF9', '#5AD8A6', '#5AD8A6', '#5AD8A6'],
+        x: [0, 1 / 3, 2 / 3, 0, 1 / 3, 2 / 3],
+        y: [0.6, 0.5, 0.8, 0.3, 0.2, 0.3],
+        y1: [1, 1, 1, 1, 1, 1],
+        z: [0, 0, 0, 1 / 2, 1 / 2, 1 / 2],
+      },
+    }).toHasAttributes({
+      tagName: 'rect',
       stroke: 'black',
-      fill: 'red',
+      fill: '#5B8FF9',
+      x: '0',
+      y: '240',
+      width: '74.65437788018433',
+      height: '160',
+    });
+  });
+
+  test('bar for transpose', () => {
+    plot({
+      geometry: interval,
+      index: [0, 1, 2],
+      styles: {
+        stroke: 'black',
+      },
+      scales: {
+        x: createBand({
+          domain: ['a', 'b', 'c'],
+          range: [0, 1],
+          padding: 0.2,
+        }),
+      },
+      channels: {
+        fill: ['#5B8FF9', '#5AD8A6', '#5D7092'],
+        x: [0, 1 / 3, 2 / 3],
+        y: [0.6, 0.4, 0.2],
+        y1: [1, 1, 1],
+      },
+      transforms: [transpose(), cartesian()],
+    }).toHasAttributes({
+      tagName: 'rect',
+      stroke: 'black',
+      fill: '#5B8FF9',
       x: '0',
       y: '0',
       width: '240',
       height: '100',
     });
-    mount(createDiv(), renderer.node());
   });
 
-  test('polar', () => {
-    const renderer = createRenderer(width, height);
-    const coordinate = createCoordinate({
-      width,
-      height,
-      x: 0,
-      y: 0,
-      transforms: [polar({
-        startAngle: 0, endAngle: Math.PI * 2, innerRadius: 0.2, outerRadius: 1,
-      }), cartesian()],
-    });
-    const paths = interval({
-      renderer,
-      index,
-      coordinate,
-      directStyles,
-      values,
-      scales,
-    });
-    const p0 = paths[0];
-
-    const attributes = ['fill', 'stroke', 'd'];
-    expect(p0.tagName).toBe('path');
-    expect(getAttributes(p0, attributes)).toEqual({
-      stroke: 'black',
-      fill: 'red',
+  test('rose for polar', () => {
+    plot({
+      geometry: interval,
+      index: [0, 1, 2],
+      styles: {
+        stroke: 'black',
+      },
+      scales: {
+        x: createBand({
+          domain: ['a', 'b', 'c'],
+          range: [0, 1],
+          padding: 0.2,
+        }),
+      },
+      channels: {
+        fill: ['#5B8FF9', '#5AD8A6', '#5D7092'],
+        x: [0, 1 / 3, 2 / 3],
+        y: [0.6, 0.4, 0.2],
+        y1: [1, 1, 1],
+      },
+      transforms: [
+        polar({ startAngle: 0, endAngle: Math.PI * 2, innerRadius: 0.2, outerRadius: 1 }),
+        cartesian(),
+      ],
+    }).toHasAttributes({
+      tagName: 'path',
       d: 'M 404 200 A 104 104 0 0 1 300 304 L 300 240 A 40 40 0 0 0 340 200 Z',
     });
-
-    mount(createDiv(), renderer.node());
   });
 
-  test('donut', () => {
-    const renderer = createRenderer(width, height);
-    const coordinate = createCoordinate({
-      width,
-      height,
-      x: 0,
-      y: 0,
-      transforms: [polar({
-        startAngle: 0, endAngle: Math.PI * 2, innerRadius: 0.2, outerRadius: 1,
-      }), cartesian()],
-    });
-    const circles = interval({
-      renderer,
-      index,
-      coordinate,
-      directStyles,
-      values: {
-        ...values,
-        x: [0, 0, 0],
-        y: [0, 1 / 3, 2 / 3],
-        y1: [1 / 3, 2 / 3, 1],
+  test('donut for ring', () => {
+    plot({
+      geometry: interval,
+      index: [0, 1, 2],
+      styles: {
+        stroke: 'black',
       },
       scales: {
         x: createBand({ domain: [0], range: [0, 1], padding: 0 }),
       },
+      channels: {
+        fill: ['#5B8FF9', '#5AD8A6', '#5D7092'],
+        x: [0, 0, 0],
+        y: [0, 1 / 3, 2 / 3],
+        y1: [1 / 3, 2 / 3, 1],
+      },
+      transforms: [
+        polar({ startAngle: 0, endAngle: Math.PI * 2, innerRadius: 0.2, outerRadius: 1 }),
+        cartesian(),
+      ],
+      get: (d) => d[0][1],
+    }).toHasAttributes({
+      tagName: 'path',
+      d: 'M 300 5.684341886080802e-14 A 199.99999999999994 199.99999999999994 0 0 1 300 399.99999999999994 L 300 346.6666666666667 A 146.66666666666669 146.66666666666669 0 0 0 300 53.333333333333314 Z M 300 399.99999999999994 A 199.99999999999994 199.99999999999994 0 0 1 300 5.684341886080802e-14 L 300 53.333333333333314 A 146.66666666666669 146.66666666666669 0 0 0 300 346.6666666666667 Z',
     });
+  });
 
-    const attributes = ['fill', 'stroke', 'cx', 'cy', 'r'];
-    const c0 = circles[0][1];
-    expect(c0.tagName).toBe('circle');
-    expect(getAttributes(c0, attributes)).toEqual({
-      stroke: 'red',
-      fill: 'transparent',
-      cx: '300',
-      cy: '200',
-      r: '173.33333333333331',
+  test('pie for transpose, polar', () => {
+    plot({
+      geometry: interval,
+      index: [0, 1, 2],
+      styles: {
+        stroke: 'black',
+      },
+      scales: {
+        x: createBand({ domain: [0], range: [0, 1], padding: 0 }),
+      },
+      channels: {
+        fill: ['#5B8FF9', '#5AD8A6', '#5D7092'],
+        x: [0, 0, 0],
+        y: [0, 1 / 3, 2 / 3],
+        y1: [1 / 3, 2 / 3, 1],
+      },
+      transforms: [
+        transpose(),
+        polar({ startAngle: 0, endAngle: Math.PI * 2, innerRadius: 0.2, outerRadius: 1 }),
+        cartesian(),
+      ],
+    }).toHasAttributes({
+      tagName: 'path',
+      d: 'M 200.00000000000009 26.794919243112236 A 199.99999999999997 199.99999999999997 0 0 1 499.99999999999994 199.99999999999994 L 340 200 A 40 40 0 0 0 280 165.35898384862244 Z',
     });
-
-    mount(createDiv(), renderer.node());
   });
 });

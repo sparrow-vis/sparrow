@@ -1,1 +1,7 @@
-export { createInterval } from './interval';
+export { interval } from './interval';
+export { cell } from './cell';
+export { rect } from './rect';
+export { line } from './line';
+export { point } from './point';
+export { area } from './area';
+export { text } from './text';
