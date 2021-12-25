@@ -1,6 +1,6 @@
 import {
   translate, scale, reflectY, polar as polarT,
-} from './transforms';
+} from './transform';
 import { curry } from '../utils/helper';
 
 function coordinate(transformOptions, canvasOptions) {

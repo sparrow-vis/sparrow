@@ -1,45 +1,31 @@
-import {
-  createColorChannel, createLabelChannel, createXChannel, createYChannel,
-} from './channel';
-import { fromStyles, rect, rectLabel } from './utils';
+import { createChannel, createChannels, createXChannel, createYChannel } from './channel';
+import { channelStyles } from './style';
+import { rect } from './shape';
 
-export function createInterval() {
-  const render = ({
-    renderer, index, values, directStyles, scales, coordinate,
-  }) => {
-    const {
-      fill: F, stroke: S, x: X, y: Y, y1: Y1, label: L,
-    } = values;
-    const { x } = scales;
-    const width = x ? x.bandWidth() : 1;
-    return index.map((i) => {
-      const vx = X[i] || 0;
-      const label = L && L[i];
-      const styles = {
-        ...directStyles,
-        ...(S && { stroke: S[i] }),
-        ...(F && { fill: F[i] }),
-      };
-      const [geometryStyles, labelStyles] = fromStyles(styles);
-      const v0 = [vx, Y[i]];
-      const v1 = [v0[0] + width, v0[1]];
-      const v2 = [v1[0], Y1[i]];
-      const v3 = [v0[0], Y1[i]];
-      const points = [v0, v1, v2, v3];
-      const rects = rect(renderer, points, coordinate, geometryStyles);
-      if (label !== undefined) rectLabel(renderer, label, points, coordinate, labelStyles);
-      return rects;
+export function interval(renderer, I, scales, channels, directStyles, coordinate) {
+  const defaults = {};
+  const { x, z } = scales;
+  const { x: X, y: Y, y1: Y1, z: Z = [] } = channels;
+  const groupWidth = x ? x.bandWidth() : 1;
+  const intervalWidth = z ? z.bandWidth() : 1;
+  const width = groupWidth * intervalWidth;
+  return Array.from(I, (i) => {
+    const offset = (Z[i] || 0) * groupWidth;
+    const x1 = (X[i] || 0) + offset;
+    return rect(renderer, coordinate, {
+      ...defaults,
+      ...directStyles,
+      ...channelStyles(i, channels),
+      x1,
+      y1: Y[i],
+      x2: x1 + width,
+      y2: Y1[i],
     });
-  };
-
-  render.channels = () => ({
-    x: createXChannel({ name: 'x', scaleType: 'band', optional: false }),
-    y: createYChannel({ name: 'y', optional: false }),
-    y1: createYChannel({ name: 'y1', optional: false }),
-    fill: createColorChannel({ name: 'fill' }),
-    stroke: createColorChannel({ name: 'stroke' }),
-    label: createLabelChannel({ name: 'label' }),
   });
-
-  return render;
 }
+
+interval.channels = () => createChannels({
+  x: createXChannel({ name: 'x', type: 'band', optional: false }),
+  z: createChannel({ name: 'z', type: 'band' }),
+  y1: createYChannel({ name: 'y1', optional: false }),
+});
