@@ -26,6 +26,6 @@ export function angle([x, y]) {
   return theta;
 }
 
-export function fromDegree(radian) {
+export function degree(radian) {
   return (radian * 180) / Math.PI;
 }

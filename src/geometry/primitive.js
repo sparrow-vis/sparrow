@@ -1,4 +1,4 @@
-import { area as pathArea, line as pathLine, ring as pathRing } from './path';
+import { area as pathArea, line as pathLine, ring as pathRing } from './d';
 
 export function ring(renderer, { cx, cy, r1, r2, ...styles }) {
   const ring = renderer.path({ ...styles, d: pathRing([[cx, cy], [r1, r2]]), stroke: 'none' });

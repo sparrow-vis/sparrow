@@ -1,25 +1,17 @@
-export function createChannel({ optional = true, ...rest }) {
-  return { optional, ...rest };
+export function createChannel({
+  name,
+  optional = true,
+  ...rest
+}) {
+  return { name, optional, ...rest };
 }
 
-export function createXChannel(options) {
-  return createChannel({ scale: 'x', ...options });
-}
-
-export function createYChannel(options) {
-  return createChannel({ scale: 'y', ...options });
-}
-
-export function createColorChannel(options) {
-  return createChannel({ scale: 'color', ...options });
-}
-
-export function createChannels(options) {
+export function createChannels(options = {}) {
   return {
-    x: createXChannel({ name: 'x', optional: false }),
-    y: createYChannel({ name: 'y', optional: false }),
-    fill: createColorChannel({ name: 'fill' }),
-    stroke: createColorChannel({ name: 'stroke' }),
+    x: createChannel({ name: 'x', optional: false }),
+    y: createChannel({ name: 'y', optional: false }),
+    stroke: createChannel({ name: 'stroke' }),
+    fill: createChannel({ name: 'fill' }),
     ...options,
   };
 }

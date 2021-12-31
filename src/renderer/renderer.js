@@ -1,10 +1,6 @@
 import { createContext } from './context';
-import {
-  line, circle, text, rect, path,
-} from './shape';
-import {
-  restore, save, scale, translate, rotate,
-} from './transform';
+import { line, circle, text, rect, path } from './shape';
+import { restore, save, scale, translate, rotate } from './transform';
 
 export function createRenderer(width, height, {
   line: drawLine = line,
@@ -12,11 +8,9 @@ export function createRenderer(width, height, {
   text: drawText = text,
   rect: drawRect = rect,
   path: drawPath = path,
-  context: intensifyContext = () => {},
-  ...rest
+  context: intensifyContext = (d) => d,
 } = {}) {
-  const context = createContext(width, height);
-  intensifyContext(context);
+  const context = intensifyContext(createContext(width, height));
 
   return {
     line: (attributes) => drawLine(context, attributes),
@@ -31,6 +25,5 @@ export function createRenderer(width, height, {
     translate: (...args) => translate(context, ...args),
     node: () => context.node,
     group: () => context.group,
-    ...rest,
   };
 }

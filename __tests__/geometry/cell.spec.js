@@ -7,10 +7,10 @@ describe('cell', () => {
   test('cell has expected defaults', () => {
     const channels = cell.channels();
     expect(channels).toEqual({
-      x: { name: 'x', type: 'band', optional: false, scale: 'x' },
-      y: { name: 'y', type: 'band', optional: false, scale: 'y' },
-      fill: { name: 'fill', optional: true, scale: 'color' },
-      stroke: { name: 'stroke', optional: true, scale: 'color' },
+      x: { name: 'x', scale: 'band', optional: false },
+      y: { name: 'y', scale: 'band', optional: false },
+      fill: { name: 'fill', optional: true },
+      stroke: { name: 'stroke', optional: true },
     });
   });
 

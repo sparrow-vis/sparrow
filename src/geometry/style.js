@@ -6,6 +6,6 @@ export function channelStyles(index, channels) {
   };
 }
 
-export function groupChannels([index], channels) {
+export function groupChannelStyles([index], channels) {
   return channelStyles(index, channels);
 }

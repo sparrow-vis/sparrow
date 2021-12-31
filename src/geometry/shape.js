@@ -1,6 +1,6 @@
 import { dist, sub, equal } from '../utils';
 import { contour, ring } from './primitive';
-import { line as pathLine, area as pathArea, sector as pathSector } from './path';
+import { line as pathLine, area as pathArea, sector as pathSector } from './d';
 
 export function rect(renderer, coordinate, { x1, y1, x2, y2, ...styles }) {
   const v0 = [x1, y1];
@@ -62,4 +62,13 @@ export function text(renderer, coordinate, { x, y, rotate, text, ...styles }) {
   const textElement = renderer.text({ text, x: 0, y: 0, ...styles });
   renderer.restore();
   return textElement;
+}
+
+export function link(renderer, coordinate, { x1, y1, x2, y2, ...styles }) {
+  const [p0, p1] = [[x1, y1], [x2, y2]].map(coordinate);
+  return renderer.line({ x1: p0[0], y1: p0[1], x2: p1[0], y2: p1[1], ...styles });
+}
+
+export function path(renderer, coordinate, attributes) {
+  return renderer.path(attributes);
 }
