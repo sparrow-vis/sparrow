@@ -1,5 +1,5 @@
 import {
-  angle, sub, fromDegree, equal,
+  angle, sub, degree, equal,
 } from '../utils';
 
 export function axis({
@@ -53,7 +53,7 @@ export function tick({
 }) {
   renderer.save();
   renderer.translate(x, y);
-  renderer.rotate(fromDegree(tickRotation));
+  renderer.rotate(degree(tickRotation));
 
   renderer.line({
     x1: 0, y1: 0, x2, y2, stroke: 'currentColor', fill: 'currentColor',
@@ -61,7 +61,7 @@ export function tick({
 
   renderer.save();
   renderer.translate(x2, y2);
-  renderer.rotate(fromDegree(textRotation));
+  renderer.rotate(degree(textRotation));
 
   renderer.text({
     text: `${label}`, x: 0, y: 0, textAnchor, dy: `${dy}em`, dx: `${dx}em`, fontSize, fill: 'currentColor',

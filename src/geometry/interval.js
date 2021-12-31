@@ -1,21 +1,32 @@
-import { createChannel, createChannels, createXChannel, createYChannel } from './channel';
+import { createChannel, createChannels } from './channel';
 import { channelStyles } from './style';
 import { rect } from './shape';
+import { createGeometry } from './geometry';
 
-export function interval(renderer, I, scales, channels, directStyles, coordinate) {
-  const defaults = {};
+const channels = createChannels({
+  x: createChannel({ name: 'x', scale: 'band', optional: false }),
+  z: createChannel({ name: 'z', scale: 'band' }),
+  y1: createChannel({ name: 'y1', optional: false }),
+});
+
+function render(renderer, I, scales, values, directStyles, coordinate) {
+  const defaults = {
+    z: 0,
+    x: 0,
+  };
   const { x, z } = scales;
-  const { x: X, y: Y, y1: Y1, z: Z = [] } = channels;
-  const groupWidth = x ? x.bandWidth() : 1;
+  const { x: X, y: Y, y1: Y1, z: Z = [] } = values;
+  const groupWidth = x.bandWidth();
   const intervalWidth = z ? z.bandWidth() : 1;
   const width = groupWidth * intervalWidth;
   return Array.from(I, (i) => {
-    const offset = (Z[i] || 0) * groupWidth;
-    const x1 = (X[i] || 0) + offset;
+    const { z: dz, x: dx, ...restDefaults } = defaults;
+    const offset = (Z[i] || dz) * groupWidth;
+    const x1 = (X[i] || dx) + offset;
     return rect(renderer, coordinate, {
-      ...defaults,
+      ...restDefaults,
       ...directStyles,
-      ...channelStyles(i, channels),
+      ...channelStyles(i, values),
       x1,
       y1: Y[i],
       x2: x1 + width,
@@ -24,8 +35,4 @@ export function interval(renderer, I, scales, channels, directStyles, coordinate
   });
 }
 
-interval.channels = () => createChannels({
-  x: createXChannel({ name: 'x', type: 'band', optional: false }),
-  z: createChannel({ name: 'z', type: 'band' }),
-  y1: createYChannel({ name: 'y1', optional: false }),
-});
+export const interval = createGeometry(channels, render);

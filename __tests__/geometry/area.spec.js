@@ -6,13 +6,13 @@ describe('area', () => {
   test('area has expected defaults', () => {
     const channels = area.channels();
     expect(channels).toEqual({
-      x: { name: 'x', optional: false, scale: 'x' },
-      y: { name: 'y', optional: false, scale: 'y' },
-      x1: { name: 'x1', optional: false, scale: 'x' },
-      y1: { name: 'y1', optional: false, scale: 'y' },
+      x: { name: 'x', optional: false },
+      y: { name: 'y', optional: false },
+      x1: { name: 'x1', optional: false },
+      y1: { name: 'y1', optional: false },
       z: { name: 'z', optional: true },
-      fill: { name: 'fill', optional: true, scale: 'color' },
-      stroke: { name: 'stroke', optional: true, scale: 'color' },
+      fill: { name: 'fill', optional: true },
+      stroke: { name: 'stroke', optional: true },
     });
   });
 

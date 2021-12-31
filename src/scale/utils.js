@@ -12,10 +12,6 @@ export function band({ domain, range, padding }) {
   };
 }
 
-export function equal(a, b) {
-  return JSON.stringify(a) === JSON.stringify(b);
-}
-
 export function normalize(value, start, stop) {
   return (value - start) / (stop - start);
 }

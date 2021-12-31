@@ -9,12 +9,12 @@ describe('interval', () => {
   test('interval has expected channels', () => {
     const channels = interval.channels();
     expect(channels).toEqual({
-      x: { name: 'x', type: 'band', optional: false, scale: 'x' },
-      y: { name: 'y', optional: false, scale: 'y' },
-      z: { name: 'z', optional: true, type: 'band' },
-      y1: { name: 'y1', optional: false, scale: 'y' },
-      fill: { name: 'fill', optional: true, scale: 'color' },
-      stroke: { name: 'stroke', optional: true, scale: 'color' },
+      x: { name: 'x', scale: 'band', optional: false },
+      y: { name: 'y', optional: false },
+      z: { name: 'z', optional: true, scale: 'band' },
+      y1: { name: 'y1', optional: false },
+      fill: { name: 'fill', optional: true },
+      stroke: { name: 'stroke', optional: true },
     });
   });
 

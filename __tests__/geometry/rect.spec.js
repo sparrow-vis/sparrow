@@ -6,12 +6,12 @@ describe('rect', () => {
   test('rect has expected defaults', () => {
     const channels = rect.channels();
     expect(channels).toEqual({
-      x: { name: 'x', optional: false, scale: 'x' },
-      y: { name: 'y', optional: false, scale: 'y' },
-      x1: { name: 'x1', optional: false, scale: 'x' },
-      y1: { name: 'y1', optional: false, scale: 'y' },
-      fill: { name: 'fill', optional: true, scale: 'color' },
-      stroke: { name: 'stroke', optional: true, scale: 'color' },
+      x: { name: 'x', optional: false },
+      y: { name: 'y', optional: false },
+      x1: { name: 'x1', optional: false },
+      y1: { name: 'y1', optional: false },
+      fill: { name: 'fill', optional: true },
+      stroke: { name: 'stroke', optional: true },
     });
   });
 
