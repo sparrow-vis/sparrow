@@ -1,5 +1,6 @@
 import { createLinear } from './linear';
-import { ticks, nice, log } from './utils';
+import { nice, log } from './utils';
+import { ticks } from '../utils';
 
 export function createLog({ domain, base, ...rest }) {
   const transform = (x) => Math.log(x);

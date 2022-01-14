@@ -1,23 +1,27 @@
-import { group } from './utils';
+import { group, identity } from '../utils';
 
-export function createStack({ x, y, y1 }) {
-  return ([index, values]) => {
-    const X = values[x];
-    const Y = values[y];
-    const stacks = Array.from(group(index, (i) => X[i]).values());
-    const newY = new Array(index.length);
-    const newY1 = new Array(index.length);
-    for (const stack of stacks) {
-      let py = 0;
-      for (const i of stack) {
-        newY1[i] = py;
-        newY[i] = py + Y[i];
-        py = newY[i];
-      }
-    }
-    return [
-      index,
-      { ...values, [y]: newY, [y1]: newY1 },
-    ];
+function stack(values, accessor = identity) {
+  const stackedValues = [0];
+  for (const [i, v] of Object.entries(values)) {
+    const pv = stackedValues[i];
+    const cv = pv + accessor(v);
+    stackedValues.push(cv);
+  }
+  return stackedValues;
+}
+
+export function createStack({ fields = [], as = [], key }) {
+  const [y] = fields;
+  const [y1, y2] = as;
+  return (data) => {
+    const series = key ? Array.from(group(data, key).values()) : [data];
+    return series.flatMap((data) => {
+      const stackedValues = stack(data, (d) => d[y]);
+      return data.map((d, i) => ({
+        ...d,
+        [y1]: stackedValues[i],
+        [y2]: stackedValues[i + 1],
+      }));
+    });
   };
 }
