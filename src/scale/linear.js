@@ -1,6 +1,5 @@
-import {
-  normalize, tickStep, nice, floor, ceil, ticks,
-} from './utils';
+import { normalize, nice } from './utils';
+import { tickStep, ticks, floor, ceil } from '../utils';
 
 export function createLinear({
   domain: [d0, d1],

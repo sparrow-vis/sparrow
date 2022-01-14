@@ -14,3 +14,11 @@ export function curry(fn) {
     return curried.bind(null, ...newArgs);
   };
 }
+
+export function ceil(n, base) {
+  return base * Math.ceil(n / base);
+}
+
+export function floor(n, base) {
+  return base * Math.floor(n / base);
+}
