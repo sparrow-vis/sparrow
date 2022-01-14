@@ -1,0 +1,1 @@
+export { createViews } from './view';
