@@ -22,3 +22,7 @@ export function ceil(n, base) {
 export function floor(n, base) {
   return base * Math.floor(n / base);
 }
+
+export function round(n) {
+  return Math.round(n * 1e12) / 1e12;
+}

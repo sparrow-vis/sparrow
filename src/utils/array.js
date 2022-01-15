@@ -1,4 +1,4 @@
-import { identity } from './helper';
+import { identity, round } from './helper';
 
 export function group(array, key = (d) => d) {
   const keyGroups = new Map();
@@ -12,10 +12,6 @@ export function group(array, key = (d) => d) {
     }
   }
   return keyGroups;
-}
-
-export function round(n) {
-  return Math.round(n * 1e12) / 1e12;
 }
 
 // @see https://github.com/d3/d3-array/blob/main/src/ticks.js#L46
@@ -56,4 +52,12 @@ export function bisect(array, x, lo = 0, hi = array.length, accessor = identity)
     }
   }
   return i;
+}
+
+export function lastOf(array) {
+  return array[array.length - 1];
+}
+
+export function firstOf(array) {
+  return array[array.length - 1];
 }

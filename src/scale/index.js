@@ -1,4 +1,4 @@
-export { createLinear, interpolateNumber } from './linear';
+export { createLinear } from './linear';
 export { createIdentity } from './identity';
 export { createOrdinal } from './ordinal';
 export { createBand } from './band';
@@ -8,3 +8,4 @@ export { createThreshold } from './threshold';
 export { createQuantize } from './quantize';
 export { createTime } from './time';
 export { createLog } from './log';
+export { interpolateNumber, interpolateColor } from './interpolate';

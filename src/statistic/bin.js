@@ -1,35 +1,6 @@
 import { bisect, ticks, identity, group, tickStep, floor, ceil } from '../utils';
 import { min, max, createAggregate } from './aggregate';
 
-// export function bin(data, count, field) {
-//   const accessor = (d) => d[field];
-//   const minValue = min(data, accessor);
-//   const maxValue = max(data, accessor);
-//   const thresholds = ticks(minValue, maxValue, count);
-
-//   return data.map((d) => {
-//     const i = bisect(thresholds, d, 0, thresholds.length, accessor);
-//     return {
-//       ...d,
-//       [field]: thresholds[i],
-//     };
-//   });
-// }
-
-// export function createBin({ fields: F, thresholds: T, aggregateType, aggregateField }) {
-//   const I = index(F);
-//   return (data) => {
-//     const aggregate = chooseSummary(aggregateType)({
-//       fields: [aggregateField],
-//       as: [aggregateType],
-//       key: (d) => I.map((i) => d[F[i]]).join('-'),
-//     });
-//     const binnedData = I.reduce((data, i) => bin(data, T[i], F[i]), data);
-//     console.log(binnedData)
-//     return aggregate(binnedData);
-//   };
-// }
-
 function bin(values, count = 10, accessor = identity) {
   const minValue = min(values, accessor);
   const maxValue = max(values, accessor);
