@@ -41,19 +41,4 @@ describe('summary', () => {
     const sum = createSum({ fields: ['height'] });
     expect((sum(data))).toEqual([{ sex: 'male', height: 850, weight: 120 }]);
   });
-
-  // test('createMean', () => {
-  //   const values = {
-  //     value,
-  //   };
-  //   const mean = createMean({ fields: ['value'] });
-  //   expect(summaryValue('mean', mean([index, values]))).toBe(2);
-  // });
-
-  // test('createMedian', () => {
-  //   const values = {
-  //     value,
-  //   };
-  //   const median = createMedian({ fields: ['value'] });
-  //   expect(summaryValue('median', median([index, values]))).toBe(2);
 });

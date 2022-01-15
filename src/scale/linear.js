@@ -1,5 +1,6 @@
 import { normalize, nice } from './utils';
 import { tickStep, ticks, floor, ceil } from '../utils';
+import { interpolateNumber } from './interpolate';
 
 export function createLinear({
   domain: [d0, d1],
@@ -21,8 +22,4 @@ export function createLinear({
   };
 
   return scale;
-}
-
-export function interpolateNumber(t, start, stop) {
-  return start * (1 - t) + stop * t;
 }

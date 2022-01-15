@@ -1,42 +1,55 @@
-import {
-  axisBottomOptions, axisLeftOptions, ticksOf, axis, showTitle, titleOf,
-} from './axis';
+import { identity, lastOf } from '../utils';
+import { axisBottom, axisLeft, axisCircular } from './axis';
+import { gridCircular, gridHorizontal, gridRay, gridVertical } from './grid';
+import { labelDown, labelBottomRight } from './label';
 
-export function axisX({
-  renderer, scale, values, coordinate, title, tickLength = 5,
+export function axisX(renderer, scale, coordinate, {
+  domain,
+  label,
+  tickCount = 5,
+  formatter = identity,
+  tickLength = 5,
+  fontSize = 12,
+  grid = false,
 }) {
-  const y = coordinate.isPolar() ? 0 : 1;
-  const ticks = ticksOf(values, scale, coordinate, false, y);
-  const isCircular = coordinate.isPolar() && !coordinate.isTranspose();
-  const isVertical = coordinate.isTranspose();
-  const axisOptions = isVertical
-    ? axisLeftOptions(tickLength)
-    : axisBottomOptions(tickLength);
+  const isTranspose = coordinate.isTranspose();
+  const isPolar = coordinate.isPolar();
+  const center = coordinate.center();
 
-  axis({
-    renderer,
-    ticks,
-    values,
-    coordinate,
-    isCircular,
-    isVertical,
-    ...axisOptions,
-  });
-  if (showTitle(title, coordinate)) {
-    const direction = isVertical ? 'down' : 'right';
-    const [point, text] = titleOf([1, y], coordinate, title, direction);
-    const {
-      x2, y2, horizontalDy, verticalDy,
-    } = axisOptions;
-    const dy = isVertical ? verticalDy : horizontalDy;
+  const options = { tickLength, fontSize, center };
+  const offset = scale.bandWidth ? scale.bandWidth() / 2 : 0;
+  const values = scale.ticks ? scale.ticks(tickCount) : domain;
+  const tick = (point) => (d) => {
+    const [x, y] = coordinate(point(d));
+    const text = formatter(d);
+    return { x, y, text };
+  };
 
-    renderer.text({
-      x: point[0] + x2,
-      y: point[1] + y2,
-      text,
-      fontSize: 12,
-      textAnchor: 'end',
-      dy: `${dy + 1}em`,
-    });
+  if (!isPolar && !isTranspose) {
+    const ticks = values.map(tick((d) => [scale(d) + offset, 1]));
+    if (grid) gridVertical(renderer, ticks, coordinate([0, 0]));
+    axisBottom(renderer, ticks, options);
+    if (label) labelBottomRight(renderer, label, lastOf(ticks), options);
+    return;
+  }
+
+  if (!isPolar && isTranspose) {
+    const ticks = values.map(tick((d) => [scale(d) + offset, 1]));
+    if (grid) gridHorizontal(renderer, ticks, coordinate([0, 0]));
+    axisLeft(renderer, ticks, options);
+    if (label) labelDown(renderer, label, lastOf(ticks), options);
+  }
+
+  if (isPolar && !isTranspose) {
+    const ticks = values.map(tick((d) => [scale(d) + offset, 0]));
+    if (grid) gridRay(renderer, ticks, center);
+    axisCircular(renderer, ticks, options);
+    return;
+  }
+
+  if (isPolar && isTranspose) {
+    const ticks = values.map(tick((d) => [scale(d) + offset, 1]));
+    if (grid) gridCircular(renderer, ticks, center);
+    axisLeft(renderer, ticks, options);
   }
 }
