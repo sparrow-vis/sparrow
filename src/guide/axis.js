@@ -1,55 +1,31 @@
-import { degree } from '../utils';
-import { rotationOf, unique } from './utils';
+import { identity } from '../utils';
 
-export function axisBottom(renderer, ticks, { tickLength, fontSize }) {
-  for (const { x, y, text } of ticks) {
-    const x2 = x;
-    const y2 = y + tickLength;
-    renderer.line({ x1: x, y1: y, x2, y2, stroke: 'currentColor', class: 'tick' });
-    renderer.text({ text, fontSize, x, y: y2, textAnchor: 'middle', dy: '1em', class: 'text' });
-  }
-}
+export function createAxis(components, labelOf) {
+  return (renderer, scale, coordinate, {
+    domain,
+    label,
+    tickCount = 5,
+    formatter = identity,
+    tickLength = 5,
+    fontSize = 12,
+    grid = false,
+  }) => {
+    const offset = scale.bandWidth ? scale.bandWidth() / 2 : 0;
+    const values = scale.ticks ? scale.ticks(tickCount) : domain;
 
-export function axisTop(renderer, ticks, { tickLength, fontSize }) {
-  for (const { x, y, text } of ticks) {
-    const x2 = x;
-    const y2 = y - tickLength;
-    renderer.line({ x1: x, y1: y, x2, y2, stroke: 'currentColor', class: 'tick' });
-    renderer.text({ text, fontSize, x, y: y2, textAnchor: 'middle', dy: '-0.3em', class: 'text' });
-  }
-}
+    const center = coordinate.center();
+    const type = `${+coordinate.isPolar()}${+coordinate.isTranspose()}`;
+    const options = { tickLength, fontSize, center };
 
-export function axisLeft(renderer, ticks, { tickLength, fontSize }) {
-  for (const { x, y, text } of ticks) {
-    const x2 = x - tickLength;
-    const y2 = y;
-    renderer.line({ x1: x, y1: y, x2, y2, stroke: 'currentColor', class: 'tick' });
-    renderer.text({ text, fontSize, x: x2, y, textAnchor: 'end', dy: '0.5em', dx: '-0.5em', class: 'text' });
-  }
-}
-
-export function axisCircular(renderer, ticks, { tickLength, fontSize, center }) {
-  for (const { x, y, text } of unique(ticks)) {
-    const { tickRotation, textRotation } = rotationOf(center, [x, y]);
-    const [x2, y2] = [0, tickLength];
-    const dy = textRotation === 0 ? '1.2em' : '-0.5em';
-
-    renderer.save();
-    renderer.translate(x, y);
-    renderer.rotate(degree(tickRotation));
-
-    renderer.line({
-      x1: 0, y1: 0, x2, y2, stroke: 'currentColor', fill: 'currentColor', class: 'tick',
+    const { grid: Grid, ticks: Ticks, label: Label, start, end } = components[type];
+    const ticks = values.map((d) => {
+      const [x, y] = coordinate(start(d, scale, offset));
+      const text = formatter(d);
+      return { x, y, text };
     });
 
-    renderer.save();
-    renderer.translate(x2, y2);
-    renderer.rotate(degree(textRotation));
-
-    renderer.text({
-      text: `${text}`, x: 0, y: 0, textAnchor: 'middle', fontSize, fill: 'currentColor', dy, class: 'text',
-    });
-    renderer.restore();
-    renderer.restore();
-  }
+    if (grid && Grid) Grid(renderer, ticks, end(coordinate));
+    Ticks(renderer, ticks, options);
+    if (label && Label) Label(renderer, label, labelOf(ticks), options);
+  };
 }

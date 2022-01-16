@@ -1,9 +1,9 @@
-export function labelUp(renderer, label, tick, { fontSize }) {
+export function labelLeftUp(renderer, label, tick, { fontSize }) {
   const { x, y } = tick;
   renderer.text({ text: `↑ ${label}`, x, y, fontSize, textAnchor: 'end', dy: '-1em', class: 'label' });
 }
 
-export function labelDown(renderer, label, tick, { fontSize }) {
+export function labelLeftDown(renderer, label, tick, { fontSize }) {
   const { x, y } = tick;
   renderer.text({ text: `↓ ${label}`, x, y, fontSize, textAnchor: 'end', dy: '2em', class: 'label' });
 }
