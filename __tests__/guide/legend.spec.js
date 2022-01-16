@@ -17,12 +17,13 @@ describe('legend', () => {
       x: 0,
       y: 10,
       domain,
+      label: 'name',
     });
 
     const svg = renderer.node();
     const [, , rect] = svg.getElementsByTagName('rect');
-    expect(rect.getAttribute('x')).toBe('108');
-    expect(rect.getAttribute('y')).toBe('0');
+    expect(rect.getAttribute('x')).toBe('96');
+    expect(rect.getAttribute('y')).toBe('20');
     expect(rect.getAttribute('fill')).toBe('#5D7092');
     expect(rect.getAttribute('stroke')).toBe('#5D7092');
   });
@@ -42,19 +43,20 @@ describe('legend', () => {
       x: 10,
       y: 10,
       domain,
+      label: 'size →',
     });
 
     const svg = renderer.node();
     const labels = svg.getElementsByTagName('text');
     const lastLabel = labels[labels.length - 1];
-    expect(labels.length).toBe(6);
+    expect(labels.length).toBe(7);
     expect(lastLabel.textContent).toBe('100');
 
     const [line] = svg.getElementsByTagName('line');
     expect(line.getAttribute('x1')).toBe('0');
-    expect(line.getAttribute('y1')).toBe('0');
+    expect(line.getAttribute('y1')).toBe('20');
     expect(line.getAttribute('x2')).toBe('0');
-    expect(line.getAttribute('y2')).toBe('10');
+    expect(line.getAttribute('y2')).toBe('30');
     expect(line.getAttribute('stroke')).toBe('#5b8ff9');
   });
 });
