@@ -61,3 +61,7 @@ export function lastOf(array) {
 export function firstOf(array) {
   return array[array.length - 1];
 }
+
+export function indicesOf(array) {
+  return array.map((_, i) => i);
+}

@@ -1,6 +1,7 @@
 import { group } from '../utils';
 
-export function computeFacetViews(box, { data, x, y, padding = 10 }) {
+export function computeFacetViews(box, { data, encodings = {}, padding = 10 }) {
+  const { x, y } = encodings;
   const cols = x ? Array.from(group(data, (d) => d[x]).keys()) : [undefined];
   const rows = y ? Array.from(group(data, (d) => d[y]).keys()) : [undefined];
   const n = cols.length;

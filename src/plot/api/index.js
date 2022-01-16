@@ -1,5 +1,5 @@
 import { defineOptions, useOptions } from './options';
-import { plot } from './plot';
+import { plot } from '../plot';
 import {
   Linear, Polar, Scale, Transpose, Encode, Chart, Band, Ordinal, Stack, AxisX, AxisY,
 } from './types';
