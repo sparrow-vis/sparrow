@@ -1,68 +1,66 @@
+import { createViews } from '../view';
 import { createRenderer } from '../renderer';
 import { createCoordinate } from '../coordinate';
-import { createScales, applyScales } from './scale';
-import { fromTransform } from './coordinate';
-import { fromGeometry } from './geometry';
-import { valuesOf } from './data';
-import { calcDimensions } from './dimension';
-import { range } from './utils';
-import { patchEncode } from './encode';
-import { applyStatistics } from './statistic';
-import { createGuides } from './guide';
+import { create } from './create';
+import { valueOf } from './value';
+import { infer } from './infer';
+import { resolve } from './resolve';
+import { computeDimension } from './dimension';
+import { identity, compose, indicesOf } from '../utils';
+import { map } from './utils';
 
-export function plot({
-  element: geometryType,
-  data = [],
-  scale: scaleOptions = [],
-  coordinate: transformDescriptors = [],
-  encode = [],
-  statistic: statisticDescriptors = [],
-  guide: guidesDescriptors = [],
-  style = {},
-  renderer: rendererPlugin = {},
-  ...options
-}) {
-  const index = range(data);
-  const geometry = fromGeometry(geometryType);
-  const channels = geometry.channels();
-  const encodes = patchEncode(geometryType, encode);
-  const values = valuesOf(data, encodes, channels);
-  const transformedValues = applyStatistics(index, values, geometryType, statisticDescriptors);
-  const [scaleDescriptors, scales] = createScales(
-    transformedValues,
-    channels,
-    transformDescriptors,
-    scaleOptions,
-  );
-  const scaledValues = applyScales(transformedValues, scales);
-  const [guides, ticks, titles] = createGuides(
-    guidesDescriptors,
-    scaleDescriptors,
-    scales,
-    encodes,
-  );
-  const {
-    width, height, marginTop, marginLeft, chartHeight, chartWidth,
-  } = calcDimensions(ticks, titles, transformDescriptors, options);
-  const coordinate = createCoordinate({
-    x: marginLeft,
-    y: marginTop,
-    width: chartWidth,
-    height: chartHeight,
-    transforms: fromTransform(transformDescriptors),
-  });
-
-  const renderer = createRenderer(width, height, rendererPlugin);
-
-  geometry({
-    index, renderer, values: scaledValues, scales, coordinate, directStyles: style,
-  });
-
-  for (const [key, guide] of Object.entries(guides)) {
-    guide({
-      renderer, scale: scales[key], values: ticks[key], coordinate, title: titles[key],
-    });
+export function plot({ view, width = 640, height = 480 }) {
+  const views = createViews(view, { width, height });
+  const renderer = createRenderer(width, height);
+  for (const [view, nodes] of Object.entries(views)) {
+    const { transform = identity, ...size } = view;
+    const partialOptions = nodes.map((node) => ({
+      ...node,
+      ...size,
+      transforms: [transform, ...(node.transforms || [])],
+    }));
+    const completeOptions = partialOptions.map(infer);
+    const syncedOptions = resolve(completeOptions);
+    for (const options of syncedOptions) {
+      plotView(renderer, options);
+    }
   }
-
   return renderer.node();
+}
+
+export function plotView(renderer, {
+  data,
+  encodings,
+  type,
+  styles,
+  coordinates: coordinateOptions,
+  scales: scalesOptions,
+  transforms: transformsOptions,
+  guides: guidesOptions,
+  ...dimensions
+}) {
+  const transform = compose(transformsOptions.map(create));
+  const scales = map(scalesOptions, create);
+  const guides = map(guidesOptions, create);
+  const geometry = create({ type });
+  const coordinate = createCoordinate({
+    ...computeDimension(dimensions, scales, guides),
+    transforms: coordinateOptions.map(create),
+  });
+
+  const I = indicesOf(data);
+  const transformedData = transform(data);
+  const values = map(encodings, (value, key) => {
+    const scale = scales[key];
+    return valueOf(transformedData, value).map(scale);
+  });
+
+  // render geometry
+  geometry(renderer, I, scales, values, styles, coordinate);
+
+  // render axis, legend
+  for (const [key, guide] of Object.entries(guides)) {
+    const scale = scales[key];
+    guide(renderer, scale, coordinate);
+  }
 }

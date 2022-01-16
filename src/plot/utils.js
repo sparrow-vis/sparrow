@@ -1,25 +1,8 @@
-export function range(data) {
-  return data.map((_, i) => i);
-}
+import { identity } from '../utils';
 
-export function fromObject(array, key, value) {
-  return array.reduce((obj, item) => (obj[key(item)] = value(item), obj), {});
-}
-
-export function unique(array) {
-  return array.filter(
-    (d, index) => array.findIndex((a) => equal(d, a)) === index,
-  );
-}
-
-export function equal(a, b) {
-  return JSON.stringify(a) === JSON.stringify(b);
-}
-
-export function min(array, accessor) {
-  return Math.min(...array.map(accessor));
-}
-
-export function max(array, accessor) {
-  return Math.max(...array.map(accessor));
+export function map(object, transform = identity) {
+  return Object.entries(object).reduce((obj, [key, value]) => {
+    obj[key] = transform(value, key);
+    return obj;
+  }, {});
 }

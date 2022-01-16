@@ -88,7 +88,9 @@ describe('createViews', () => {
     ];
     const views = createViews({
       type: 'facet',
-      x: 'sex',
+      encodings: {
+        x: 'sex',
+      },
       data,
       children: [{}],
     });
@@ -114,7 +116,9 @@ describe('createViews', () => {
     ];
     const views = createViews({
       type: 'facet',
-      y: 'skin',
+      encodings: {
+        y: 'skin',
+      },
       data,
       children: [{}, {}],
     });
@@ -140,8 +144,10 @@ describe('createViews', () => {
     ];
     const views = createViews({
       type: 'facet',
-      x: 'sex',
-      y: 'skin',
+      encodings: {
+        x: 'sex',
+        y: 'skin',
+      },
       data,
       padding: 30,
       children: [{}, {}],
