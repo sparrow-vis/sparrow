@@ -11,7 +11,7 @@ describe('createQuantile', () => {
     expect(s(7.1)).toBe('a');
     expect(s(8)).toBe('b');
     expect(s(8.9)).toBe('b');
-    expect(s(9)).toBe('c');
+    expect(s(9)).toBe('b');
     expect(s(13)).toBe('c');
     expect(s(14.9)).toBe('d');
     expect(s(20)).toBe('d');

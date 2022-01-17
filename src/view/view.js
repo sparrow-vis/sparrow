@@ -6,7 +6,13 @@ import { group } from '../utils';
 
 export function createViews(root, { width = 600, height = 400 } = {}) {
   const nodes = descendants(root);
-  const rootView = { x: 0, y: 0, width, height };
+  const { paddingLeft = 30, paddingRight = 30, paddingBottom = 40, paddingTop = 40 } = root;
+  const rootView = {
+    x: paddingLeft,
+    y: paddingTop,
+    width: width - paddingLeft - paddingRight,
+    height: height - paddingBottom - paddingTop,
+  };
   const nodeView = new Map([[root, rootView]]);
   const computes = {
     layer: computeLayerViews,
