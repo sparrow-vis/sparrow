@@ -15,7 +15,7 @@ describe('createViews', () => {
 
     expect(views.length).toBe(1);
     const [[view, [node]]] = views;
-    expect(view).toEqual({ x: 0, y: 0, width: 600, height: 400 });
+    expect(view).toEqual({ x: 30, y: 40, width: 540, height: 320 });
     expect(node).toEqual({});
   });
 
@@ -28,7 +28,7 @@ describe('createViews', () => {
 
     expect(views.length).toBe(1);
     const [[view, nodes]] = views;
-    expect(view).toEqual({ x: 0, y: 0, width: 600, height: 400 });
+    expect(view).toEqual({ x: 30, y: 40, width: 540, height: 320 });
     expect(nodes.length).toBe(3);
   });
 
@@ -41,7 +41,7 @@ describe('createViews', () => {
     expect(views.length).toBe(3);
 
     const [, [view, [node]]] = views;
-    expect(view).toEqual({ height: 380, width: 285, x: 10, y: 10 });
+    expect(view).toEqual({ height: 320, width: 250, x: 30, y: 40 });
     expect(node).toEqual({});
   });
 
@@ -59,7 +59,7 @@ describe('createViews', () => {
     expect(views.length).toBe(4);
 
     const [, [view, [node]]] = views;
-    expect(view).toEqual({ height: 80, width: 560, x: 20, y: 20 });
+    expect(view).toEqual({ height: 70, width: 540, x: 30, y: 40 });
     expect(node).toEqual({});
   });
 
@@ -75,7 +75,7 @@ describe('createViews', () => {
 
     expect(views.length).toBe(5);
     const [, , , [view, [node]]] = views;
-    expect(view).toEqual({ height: 175, width: 265, x: 315, y: 20 });
+    expect(view).toEqual({ height: 140, width: 250, x: 320, y: 40 });
     expect(node).toEqual({});
   });
 
@@ -99,7 +99,7 @@ describe('createViews', () => {
     expect(views.length).toBe(3);
     const [, [view, [node]]] = views;
     const { transform, ...rest } = view;
-    expect(rest).toEqual({ height: 380, width: 285, x: 10, y: 10 });
+    expect(rest).toEqual({ height: 240, width: 210, x: 70, y: 80 });
     expect(node).toEqual({});
     expect(transform(data)).toEqual([
       { sex: 'male', skin: 'white' },
@@ -127,7 +127,7 @@ describe('createViews', () => {
     expect(views.length).toBe(4);
     const [, [view, [node]]] = views;
     const { transform, ...rest } = view;
-    expect(rest).toEqual({ height: 120, width: 580, x: 10, y: 10 });
+    expect(rest).toEqual({ height: 53.333333333333336, width: 460, x: 70, y: 80 });
     expect(node).toEqual({});
     expect(transform(data)).toEqual([
       { sex: 'male', skin: 'white' },
@@ -157,7 +157,7 @@ describe('createViews', () => {
     expect(views.length).toBe(7);
     const [, [view, [node]]] = views;
     const { transform, ...rest } = view;
-    expect(rest).toEqual({ height: 93.33333333333333, width: 255, x: 30, y: 30 });
+    expect(rest).toEqual({ height: 66.66666666666667, width: 225, x: 60, y: 70 });
     expect(node).toEqual({});
     expect(transform(data)).toEqual([
       { sex: 'male', skin: 'white' },
