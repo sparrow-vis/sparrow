@@ -1,24 +1,21 @@
 export function computeFlexViews(box, node) {
   const { type, children, flex = children.map(() => 1), padding = 40 } = node;
-  const mainStart = type === 'col' ? 'y' : 'x';
-  const mainSize = type === 'col' ? 'height' : 'width';
-  const crossSize = type === 'col' ? 'width' : 'height';
-  const crossStart = type === 'col' ? 'x' : 'y';
+  const [mainStart, mainSize, crossSize, crossStart] = type === 'col'
+    ? ['y', 'height', 'width', 'x']
+    : ['x', 'width', 'height', 'y'];
 
   const sum = flex.reduce((total, value) => total + value);
   const totalSize = box[mainSize] - padding * (children.length - 1);
   const sizes = flex.map((value) => totalSize * (value / sum));
 
-  let next = box[mainStart];
-
-  return sizes.map((size) => {
-    const childBox = {
+  const childrenViews = [];
+  for (let next = box[mainStart], i = 0; i < sizes.length; next += sizes[i] + padding, i += 1) {
+    childrenViews.push({
       [mainStart]: next,
-      [mainSize]: size,
+      [mainSize]: sizes[i],
       [crossStart]: box[crossStart],
       [crossSize]: box[crossSize],
-    };
-    next += size + padding;
-    return childBox;
-  });
+    });
+  }
+  return childrenViews;
 }
