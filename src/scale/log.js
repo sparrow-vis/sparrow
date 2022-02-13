@@ -1,13 +1,12 @@
 import { createLinear } from './linear';
-import { nice, log } from './utils';
-import { ticks } from '../utils';
+import { ticks, nice, log } from '../utils';
 
-export function createLog({ domain, base, ...rest }) {
+export function createLog({ domain, base = Math.E, ...rest }) {
   const transform = (x) => Math.log(x);
   let linear = createLinear({ domain: domain.map(transform), ...rest });
   const scale = (x) => linear(transform(x));
 
-  scale.ticks = (tickCount) => {
+  scale.ticks = (tickCount = 5) => {
     const [min, max] = domain.map((x) => log(x, base));
     return ticks(min, max, tickCount).map((x) => base ** x);
   };

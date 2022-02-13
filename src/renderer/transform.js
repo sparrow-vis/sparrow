@@ -1,4 +1,4 @@
-import { applyTransform, createSVGElement, mount } from './utils';
+import { applyTransform, createSVGElement, mount } from '../utils';
 
 export function translate(context, tx, ty) {
   transform('translate', context, tx, ty);

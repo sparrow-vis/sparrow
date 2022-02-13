@@ -1,6 +1,5 @@
 import { createRenderer } from '../../src/renderer';
-import { mount } from '../../src/renderer/utils';
-import { createDiv } from '../utils';
+import { createDiv, mount } from '../utils';
 
 describe('transform', () => {
   test('Renderer should apply specified transforms and can save or restore transforms context.', () => {
