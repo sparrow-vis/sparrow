@@ -1,18 +1,12 @@
 import { computeFlexViews } from './flex';
 import { computeFacetViews } from './facet';
 import { computeLayerViews } from './layer';
-import { descendants } from './tree';
-import { group } from '../utils';
+import { descendants, group } from '../utils';
 
-export function createViews(root, { width = 600, height = 400 } = {}) {
+export function createViews(root) {
   const nodes = descendants(root);
-  const { paddingLeft = 30, paddingRight = 30, paddingBottom = 40, paddingTop = 40 } = root;
-  const rootView = {
-    x: paddingLeft,
-    y: paddingTop,
-    width: width - paddingLeft - paddingRight,
-    height: height - paddingBottom - paddingTop,
-  };
+  const { width = 640, height = 480, x = 0, y = 0 } = root;
+  const rootView = { width, height, x, y };
   const nodeView = new Map([[root, rootView]]);
   const computes = {
     layer: computeLayerViews,

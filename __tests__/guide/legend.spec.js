@@ -22,7 +22,7 @@ describe('legend', () => {
 
     const svg = renderer.node();
     const [, , rect] = svg.getElementsByTagName('rect');
-    expect(rect.getAttribute('x')).toBe('96');
+    expect(rect.getAttribute('x')).toBe('128');
     expect(rect.getAttribute('y')).toBe('20');
     expect(rect.getAttribute('fill')).toBe('#5D7092');
     expect(rect.getAttribute('stroke')).toBe('#5D7092');

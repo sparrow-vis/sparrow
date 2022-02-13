@@ -2,7 +2,7 @@ import { createViews } from '../../src/view/view';
 import { createRenderer } from '../../src/renderer/renderer';
 import { mount, createDiv } from '../utils';
 
-function renderViews(views, width = 600, height = 400) {
+function renderViews(views, width = 640, height = 480) {
   const renderer = createRenderer(width, height);
   mount(createDiv(), renderer.node());
   return views.map(([{ x, y, width, height }]) => renderer.rect({ x, y, width, height, stroke: 'black', fill: 'none' }));

@@ -1,14 +1,19 @@
 import { group } from '../utils';
 
-export function computeFacetViews(box, { data, encodings = {}, padding = 40 }) {
+export function computeFacetViews(box, {
+  data, encodings = {}, padding = 0,
+  paddingLeft = 45, paddingRight = 45, paddingBottom = 45, paddingTop = 60,
+}) {
   const { x, y } = encodings;
   const cols = x ? Array.from(group(data, (d) => d[x]).keys()) : [undefined];
   const rows = y ? Array.from(group(data, (d) => d[y]).keys()) : [undefined];
   const n = cols.length;
   const m = rows.length;
   const views = [];
-  const boxWidth = (box.width - padding * (n + 1)) / n;
-  const boxHeight = (box.height - padding * (m + 1)) / m;
+  const width = box.width - paddingLeft - paddingRight;
+  const height = box.height - paddingTop - paddingBottom;
+  const boxWidth = (width - padding * (n - 1)) / n;
+  const boxHeight = (height - padding * (m - 1)) / m;
   for (let i = 0; i < n; i += 1) {
     for (let j = 0; j < m; j += 1) {
       const transform = (data) => {
@@ -17,8 +22,8 @@ export function computeFacetViews(box, { data, encodings = {}, padding = 40 }) {
         return data.filter((d) => inRow(d) && inCol(d));
       };
       views.push({
-        x: box.x + padding * (i + 1) + i * boxWidth,
-        y: box.y + padding * (j + 1) + j * boxHeight,
+        x: paddingLeft + box.x + padding * (i + 1) + i * boxWidth,
+        y: paddingRight + box.y + padding * (j + 1) + j * boxHeight,
         width: boxWidth,
         height: boxHeight,
         transform,
