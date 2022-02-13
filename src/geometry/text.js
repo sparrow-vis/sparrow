@@ -6,7 +6,7 @@ import { channelStyles } from './style';
 const channels = createChannels({
   rotate: createChannel({ name: 'rotate' }),
   fontSize: createChannel({ name: 'fontSize' }),
-  text: createChannel({ name: 'text', optional: false }),
+  text: createChannel({ name: 'text', optional: false, scale: 'identity' }),
 });
 
 function render(renderer, I, scales, values, directStyles, coordinate) {
