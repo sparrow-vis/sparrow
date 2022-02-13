@@ -11,7 +11,7 @@ export function legendRamp(renderer, scale, coordinate, {
   tickCount = 5,
   tickLength = height + 5,
   formatter = identity,
-  fontSize = 12,
+  fontSize = 10,
   label,
 }) {
   renderer.save();

@@ -1,4 +1,3 @@
-import { firstOf } from '../utils';
 import { createAxis } from './axis';
 import { ticksTop, ticksLeft, ticksCircular } from './ticks';
 import { gridCircular, gridHorizontal, gridRay, gridVertical } from './grid';
@@ -33,4 +32,4 @@ const components = {
   },
 };
 
-export const axisY = createAxis(components, firstOf);
+export const axisY = createAxis(components);
