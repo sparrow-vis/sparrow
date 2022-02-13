@@ -7,7 +7,7 @@ describe('text', () => {
     expect(channels).toEqual({
       x: { name: 'x', optional: false },
       y: { name: 'y', optional: false },
-      text: { name: 'text', optional: false },
+      text: { name: 'text', optional: false, scale: 'identity' },
       fontSize: { name: 'fontSize', optional: true },
       rotate: { name: 'rotate', optional: true },
       fill: { name: 'fill', optional: true },
