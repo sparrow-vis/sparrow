@@ -2,8 +2,7 @@ import {
   cartesian, createCoordinate,
 } from '../../src/coordinate';
 import { createRenderer } from '../../src/renderer';
-import { mount } from '../../src/renderer/utils';
-import { createDiv } from '../utils';
+import { createDiv, mount } from '../utils';
 
 export function plot({
   index,

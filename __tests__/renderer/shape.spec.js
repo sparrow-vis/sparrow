@@ -1,7 +1,6 @@
 import { createRenderer } from '../../src/renderer';
 import { shape } from '../../src/renderer/shape';
-import { mount } from '../../src/renderer/utils';
-import { createDiv, getAttributes } from '../utils';
+import { createDiv, getAttributes, mount } from '../utils';
 
 describe('shapes', () => {
   test('shape(name, context, attributes) creates SVG elements width specified attributes and mounts it to group.', () => {
