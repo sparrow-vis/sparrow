@@ -1,5 +1,4 @@
-import { rotationOf, unique } from './utils';
-import { degree } from '../utils';
+import { degree, angle, sub, unique } from '../utils';
 
 export function ticksBottom(renderer, ticks, { tickLength, fontSize }) {
   for (const { x, y, text } of ticks) {
@@ -29,7 +28,7 @@ export function ticksLeft(renderer, ticks, { tickLength, fontSize }) {
 }
 
 export function ticksCircular(renderer, ticks, { tickLength, fontSize, center }) {
-  for (const { x, y, text } of unique(ticks)) {
+  for (const { x, y, text } of unique(ticks, (d) => d.x, (d) => d.y)) {
     const { tickRotation, textRotation } = rotationOf(center, [x, y]);
     const [x2, y2] = [0, tickLength];
     const dy = textRotation === 0 ? '1.2em' : '-0.5em';
@@ -52,4 +51,10 @@ export function ticksCircular(renderer, ticks, { tickLength, fontSize, center })
     renderer.restore();
     renderer.restore();
   }
+}
+
+function rotationOf(center, [x, y]) {
+  const tickRotation = angle(sub([x, y], center));
+  const textRotation = tickRotation < 0 ? Math.PI : 0;
+  return { tickRotation: tickRotation - Math.PI / 2, textRotation };
 }
