@@ -15,7 +15,7 @@ import {
 } from './data';
 
 describe('plot', () => {
-  test('interval in cartesian', () => {
+  test('interval with field encoding', () => {
     const chart = sp.plot({
       type: 'interval',
       data: sports,
@@ -24,11 +24,10 @@ describe('plot', () => {
         y: 'sold',
       },
     });
-
     mount(createDiv(), chart);
   });
 
-  test('bin', () => {
+  test('binned rect', () => {
     const chart = sp.plot({
       type: 'rect',
       data: rainfall,
@@ -68,7 +67,7 @@ describe('plot', () => {
     mount(createDiv(), chart);
   });
 
-  test('interval with symmetry', () => {
+  test('symmetried interval', () => {
     const chart = sp.plot({
       type: 'interval',
       data: sports,
@@ -84,10 +83,14 @@ describe('plot', () => {
     mount(createDiv(), chart);
   });
 
-  test('stack interval in polar', () => {
+  test('stacked interval in polar', () => {
     const chart = sp.plot({
       type: 'interval',
       data: sports,
+      transforms: [(data) => {
+        const sum = data.reduce((total, d) => total + d.sold, 0);
+        return data.map(({ genre, sold }) => ({ genre, sold: sold / sum }));
+      }],
       coordinates: [{ type: 'transpose' }, { type: 'polar' }],
       statistics: [{ type: 'stackY' }],
       scales: {
@@ -100,6 +103,10 @@ describe('plot', () => {
       encodings: {
         y: 'sold',
         fill: 'genre',
+      },
+      styles: {
+        stroke: '#000',
+        strokeWidth: 2,
       },
     });
     mount(createDiv(), chart);
@@ -196,7 +203,7 @@ describe('plot', () => {
     mount(createDiv(), chart);
   });
 
-  test('pyramid interval', () => {
+  test('pyramid interval with transform encoding', () => {
     const chart = sp.plot({
       type: 'interval',
       data: rainfall,
@@ -242,7 +249,7 @@ describe('plot', () => {
     mount(createDiv(), chart);
   });
 
-  test('interval for y and y1', () => {
+  test('layerd text and interval with y and y1 encoded', () => {
     const chart = sp.plot({
       type: 'layer',
       data: profit,
@@ -317,7 +324,7 @@ describe('plot', () => {
     mount(createDiv(), chart);
   });
 
-  test('layer', () => {
+  test('layered line and point', () => {
     const chart = sp.plot({
       type: 'layer',
       encodings: {
@@ -341,7 +348,7 @@ describe('plot', () => {
     mount(createDiv(), chart);
   });
 
-  test('row', () => {
+  test('rowed line and point', () => {
     const chart = sp.plot({
       type: 'row',
       width: 840,
@@ -367,7 +374,7 @@ describe('plot', () => {
     mount(createDiv(), chart);
   });
 
-  test('col', () => {
+  test('coled line and point', () => {
     const chart = sp.plot({
       type: 'col',
       height: 840,
@@ -393,7 +400,7 @@ describe('plot', () => {
     mount(createDiv(), chart);
   });
 
-  test('point and stack', () => {
+  test('stacked point', () => {
     const chart = sp.plot({
       data: countries,
       type: 'point',
@@ -410,29 +417,7 @@ describe('plot', () => {
     mount(createDiv(), chart);
   });
 
-  test('point and jilter', () => {
-    const chart = sp.plot({
-      data: countries,
-      type: 'point',
-      statistics: [{ type: 'jilter' }],
-      guides: {
-        x: { grid: true, align: false },
-        y: { tick: false, grid: true },
-      },
-      scales: {
-        y: { nice: true },
-      },
-      coordinates: [{ type: 'polar' }],
-      encodings: {
-        x: 'year',
-        y: 0.5,
-        stroke: 'year',
-      },
-    });
-    mount(createDiv(), chart);
-  });
-
-  test('point with only x', () => {
+  test('point with x encoded', () => {
     const chart = sp.plot({
       data: countries,
       type: 'point',
@@ -444,7 +429,7 @@ describe('plot', () => {
     mount(createDiv(), chart);
   });
 
-  test('point, log, interpolate', () => {
+  test('point with interpolated log scale', () => {
     const chart = sp.plot({
       data: countries,
       type: 'point',
@@ -498,7 +483,7 @@ describe('plot', () => {
     mount(createDiv(), chart);
   });
 
-  test('area, dot and range', () => {
+  test('stacked and symmetried area', () => {
     const chart = sp.plot({
       type: 'area',
       data: countries,
@@ -519,7 +504,7 @@ describe('plot', () => {
     mount(createDiv(), chart);
   });
 
-  test('area in polar', () => {
+  test('area and point in polar', () => {
     const chart = sp.plot({
       type: 'layer',
       data: users,
@@ -567,7 +552,7 @@ describe('plot', () => {
     mount(createDiv(), chart);
   });
 
-  test('cell and quantile', () => {
+  test('cell with quantile scale', () => {
     const chart = sp.plot({
       type: 'cell',
       data: heatmap,
@@ -588,7 +573,7 @@ describe('plot', () => {
     mount(createDiv(), chart);
   });
 
-  test('cell and quantize', () => {
+  test('cell with quantize scale', () => {
     const chart = sp.plot({
       type: 'cell',
       data: heatmap,
@@ -609,7 +594,7 @@ describe('plot', () => {
     mount(createDiv(), chart);
   });
 
-  test('cell and threshold', () => {
+  test('cell with threshold scale', () => {
     const chart = sp.plot({
       type: 'cell',
       data: heatmap,

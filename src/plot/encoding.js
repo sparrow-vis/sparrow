@@ -17,7 +17,7 @@ export function inferEncodings(type, data, encodings) {
     case 'link':
       return maybeStroke(maybeIdentityX(typedEncodings));
     case 'point':
-      return maybeStroke(typedEncodings);
+      return maybeZeroY(maybeStroke(typedEncodings));
     case 'rect':
       return maybeFill(maybeZeroX1(maybeZeroY1(typedEncodings)));
     case 'cell':
@@ -62,6 +62,10 @@ function maybeZeroY1({ y1 = zero(), ...rest }) {
 
 function maybeZeroX1({ x1 = zero(), ...rest }) {
   return { x1, ...rest };
+}
+
+function maybeZeroY({ y = zero(), ...rest }) {
+  return { y, ...rest };
 }
 
 function maybeZeroX({ x = zero(), ...rest }) {

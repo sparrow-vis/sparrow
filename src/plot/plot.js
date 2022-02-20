@@ -48,6 +48,14 @@ function plotView({
   width, height, x, y,
   paddingLeft = 45, paddingRight = 45, paddingBottom = 45, paddingTop = 60,
 }) {
+  const geometries = geometriesOptions.map(initialize);
+  const channels = geometries.map((d) => d.channels);
+  const scaleDescriptors = inferScales(channels, scalesOptions);
+  const guidesDescriptors = inferGuides(scaleDescriptors, { x, y, paddingLeft }, guidesOptions);
+
+  const scales = map(scaleDescriptors, create);
+  const guides = map(guidesDescriptors, create);
+
   const transforms = inferCoordinates(coordinateOptions).map(create);
   const coordinate = createCoordinate({
     x: x + paddingLeft,
@@ -56,13 +64,6 @@ function plotView({
     height: height - paddingTop - paddingBottom,
     transforms,
   });
-  const geometries = geometriesOptions.map(initialize);
-  const channels = geometries.map((d) => d.channels);
-  const scaleDescriptors = inferScales(channels, scalesOptions);
-  const guidesDescriptors = inferGuides(scaleDescriptors, { x, y, paddingLeft }, guidesOptions);
-
-  const scales = map(scaleDescriptors, create);
-  const guides = map(guidesDescriptors, create);
 
   for (const [key, guide] of Object.entries(guides)) {
     const scale = scales[key];
