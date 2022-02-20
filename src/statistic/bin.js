@@ -1,37 +1,43 @@
-import { bisect, ticks, identity, group, tickStep, floor, ceil } from '../utils';
-import { min, max, createAggregate } from './aggregate';
+import { bisect, ticks, identity, group, tickStep, floor, ceil, firstOf, min, max } from '../utils';
 
 function bin(values, count = 10, accessor = identity) {
   const minValue = min(values, accessor);
   const maxValue = max(values, accessor);
   const step = tickStep(minValue, maxValue, count);
-  const niceMain = floor(minValue, step);
+  const niceMin = floor(minValue, step);
   const niceMax = ceil(maxValue, step);
-  return ticks(niceMain, niceMax, count);
+  const niceStep = tickStep(niceMin, niceMax, count);
+  const thresholds = ticks(niceMin, niceMax, count);
+  return Array.from(new Set([
+    floor(niceMin, niceStep),
+    ...thresholds,
+    ceil(niceMax, niceStep),
+  ]));
 }
 
-export function createBin({ fields, count, aggregateType, aggregateField, as = [] }) {
-  const [x, y] = fields;
-  const [x1 = x, y1 = y] = as;
-  const [cx, cy] = count;
-  return (data) => {
-    const thresholdsX = x ? bin(data, cx, (d) => d[x]) : [];
-    const thresholdsY = y ? bin(data, cy, (d) => d[y]) : [];
-    const key = (d) => {
-      const i = bisect(thresholdsX, d[x]);
-      const j = bisect(thresholdsY, d[y]);
-      return `${thresholdsX[i]}-${thresholdsY[j]}`;
+export function createBinX({ count = 10, channel, aggregate = (values) => values.length } = {}) {
+  return ({ index, values }) => {
+    const { [channel]: C, x: X, x1, ...rest } = values;
+    const keys = Object.keys(rest);
+    const thresholds = bin(X, count);
+    const n = thresholds.length;
+    const groups = group(index, (i) => bisect(thresholds, X[i]) - 1);
+    const I = new Array(n - 1).fill(0).map((_, i) => i);
+    const filtered = I.filter((i) => groups.has(i));
+    return {
+      index: filtered,
+      values: Object.fromEntries([
+        ...keys.map((key) => [key, I.map((i) => {
+          if (!groups.has(i)) return undefined;
+          return values[key][firstOf(groups.get(i))];
+        })]),
+        [channel, I.map((i) => {
+          if (!groups.has(i)) return 0;
+          return aggregate(groups.get(i).map((index) => values[index]));
+        })],
+        ['x', thresholds.slice(0, n - 1)],
+        ['x1', thresholds.slice(1, n)],
+      ]),
     };
-    return Array.from(group(data, key).entries()).map(([key, values]) => {
-      const aggregate = createAggregate(aggregateType);
-      const value = aggregate(values, (d) => d[aggregateField]);
-      const [tx, ty] = key.split('-').map((d) => +d);
-      return {
-        ...values[0],
-        [aggregateType]: value,
-        ...x1 && { [x1]: tx },
-        ...y1 && { [y1]: ty },
-      };
-    });
   };
 }
