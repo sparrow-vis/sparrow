@@ -22,8 +22,8 @@ export function computeFacetViews(box, {
         return data.filter((d) => inRow(d) && inCol(d));
       };
       views.push({
-        x: paddingLeft + box.x + padding * (i + 1) + i * boxWidth,
-        y: paddingRight + box.y + padding * (j + 1) + j * boxHeight,
+        x: paddingLeft + box.x + padding * i + i * boxWidth,
+        y: paddingRight + box.y + padding * j + j * boxHeight,
         width: boxWidth,
         height: boxHeight,
         transform,

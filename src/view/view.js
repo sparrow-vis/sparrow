@@ -3,17 +3,16 @@ import { computeFacetViews } from './facet';
 import { computeLayerViews } from './layer';
 import { descendants, group } from '../utils';
 
-export function createViews(root) {
+export function createViews(root, computes = {
+  layer: computeLayerViews,
+  col: computeFlexViews,
+  row: computeFlexViews,
+  facet: computeFacetViews,
+}) {
   const nodes = descendants(root);
   const { width = 640, height = 480, x = 0, y = 0 } = root;
   const rootView = { width, height, x, y };
   const nodeView = new Map([[root, rootView]]);
-  const computes = {
-    layer: computeLayerViews,
-    col: computeFlexViews,
-    row: computeFlexViews,
-    facet: computeFacetViews,
-  };
 
   for (const node of nodes) {
     const view = nodeView.get(node);

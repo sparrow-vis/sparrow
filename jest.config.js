@@ -4,7 +4,7 @@ module.exports = {
   testEnvironment: 'jest-electron/environment',
   testPathIgnorePatterns: [
     '<rootDir>/__tests__/plot/*',
-    '<rootDir>/__tests__/view/*',
+    // '<rootDir>/__tests__/view/*',
     // '<rootDir>/__tests__/statistic/*',
   ],
 };
