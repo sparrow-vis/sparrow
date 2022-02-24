@@ -17,7 +17,7 @@ function render(renderer, I, scales, values, directStyles, coordinate) {
   const { x, z } = scales;
   const { x: X, y: Y, y1: Y1, z: Z = [] } = values;
   const groupWidth = x.bandWidth();
-  const intervalWidth = z ? z.bandWidth() : 1;
+  const intervalWidth = z && z.bandWidth ? z.bandWidth() : 1;
   const width = groupWidth * intervalWidth;
   return Array.from(I, (i) => {
     const { z: dz, x: dx, ...restDefaults } = defaults;

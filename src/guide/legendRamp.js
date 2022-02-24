@@ -1,5 +1,5 @@
 import { createLinear } from '../scale';
-import { identity } from '../utils';
+import { firstOf, identity, lastOf } from '../utils';
 import { ticksBottom } from './ticks';
 
 export function legendRamp(renderer, scale, coordinate, {
@@ -22,14 +22,21 @@ export function legendRamp(renderer, scale, coordinate, {
   }
 
   const legendY = label ? height * 2 : 0;
-  const value = createLinear({ domain: [0, width], range: domain });
+  const domainValues = [firstOf(domain), lastOf(domain)];
+  const value = createLinear({ domain: [0, width], range: domainValues });
   for (let i = 0; i < width; i += 1) {
     const stroke = scale(value(i));
     renderer.line({ x1: i, y1: legendY, x2: i, y2: legendY + height, stroke });
   }
 
-  const position = createLinear({ domain, range: [0, width] });
-  const values = position.ticks(tickCount);
+  const position = createLinear({ domain: domainValues, range: [0, width] });
+
+  const values = scale.thresholds ? [
+    domainValues[0],
+    ...scale.thresholds(),
+    domainValues[1],
+  ] : position.ticks(tickCount);
+
   const ticks = values.map((d) => ({
     x: position(d),
     y: legendY,

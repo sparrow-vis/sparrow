@@ -5,7 +5,7 @@ describe('path', () => {
   test('path has expected defaults', () => {
     const channels = path.channels();
     expect(channels).toEqual({
-      d: { name: 'd', optional: false },
+      d: { name: 'd', optional: false, scale: 'identity' },
       fill: { name: 'fill', optional: true },
       stroke: { name: 'stroke', optional: true },
     });
