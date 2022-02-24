@@ -8,13 +8,14 @@ export function createAxis(components) {
     {
       domain,
       label,
-      tickCount = 5,
+      tickCount = 10,
       formatter = identity,
       tickLength = 5,
       grid = false,
       tick = true,
     },
   ) => {
+    if (domain.length === 0) return;
     const fontSize = 10;
     const isOrdinal = !!scale.bandWidth;
     const isQuantitative = !!scale.ticks;

@@ -11,9 +11,10 @@ export function createLinear({
     return interpolate(t, r0, r1);
   };
 
-  scale.ticks = (tickCount = 5) => ticks(d0, d1, tickCount);
-  scale.nice = (tickCount = 5) => {
+  scale.ticks = (tickCount = 10) => ticks(d0, d1, tickCount);
+  scale.nice = (tickCount = 10) => {
     if (d0 === d1) return;
+    // the first time
     const step = tickStep(d0, d1, tickCount);
     [d0, d1] = nice([d0, d1], {
       floor: (x) => floor(x, step),

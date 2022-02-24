@@ -13,8 +13,7 @@ import {
 } from '../scale';
 import { axisX, axisY, legendRamp, legendSwatches } from '../guide';
 import { cartesian, transpose, polar } from '../coordinate';
-import { createStackY } from '../statistic/stack';
-import { createBinX, createNormalizeY, createSymmetryY } from '../statistic';
+import { createBinX, createNormalizeY, createSymmetryY, createStackY } from '../statistic';
 
 export function create(options) {
   if (typeof options === 'function') return options;
@@ -78,7 +77,7 @@ function createGuide(guide, options) {
 }
 
 function createScaleQ(ctor, options) {
-  const { nice, tickCount } = options;
+  const { nice = true, tickCount = 10 } = options;
   const scale = ctor(options);
   if (nice) scale.nice(tickCount);
   return scale;

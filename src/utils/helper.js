@@ -49,7 +49,7 @@ export function map(object, transform = identity) {
 
 export function assignDefined(target, source) {
   for (const [key, value] of Object.entries(source)) {
-    if (value) target[key] = value;
+    if (value !== undefined) target[key] = value;
   }
 }
 

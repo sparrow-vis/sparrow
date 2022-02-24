@@ -151,6 +151,7 @@ function isUnique(values) {
 
 function inferDomainQ(values, { zero = false } = {}) {
   const definedValues = values.filter(defined);
+  if (definedValues.length === 0) return [];
   const min = Math.min(...definedValues);
   const max = Math.max(...definedValues);
   return [zero ? 0 : min, max];

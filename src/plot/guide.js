@@ -22,7 +22,9 @@ function merge(options, { domain, label }) {
 
 function inferLegendType({ type }) {
   switch (type) {
-    case 'linear': case 'log': case 'time': return 'legendRamp';
+    case 'linear': case 'log': case 'time':
+    case 'threshold': case 'quantile': case 'quantize':
+      return 'legendRamp';
     default:
       return 'legendSwatches';
   }

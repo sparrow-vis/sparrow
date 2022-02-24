@@ -38,7 +38,7 @@ export function valueOf(data, { type, value }) {
 function inferType(data, encoding, name) {
   if (typeof encoding === 'function') return 'transform';
   if (typeof encoding === 'string') {
-    if (firstOf(data)[encoding] !== undefined) return 'field';
+    if (data.length && firstOf(data)[encoding] !== undefined) return 'field';
     if (isStyle(name)) return 'constant';
   }
   return 'value';

@@ -40,7 +40,7 @@ export function initialize({
     if (values) {
       channels[key] = createChannel(channel, values, encodings[key]);
     } else if (!optional) {
-      throw new Error(`Missing values for channel:${key}`);
+      throw new Error(`Missing values for channel: ${key}`);
     }
   }
 

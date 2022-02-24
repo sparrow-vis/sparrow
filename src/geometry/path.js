@@ -4,7 +4,7 @@ import { path as shapePath } from './shape';
 import { channelStyles } from './style';
 
 const channels = {
-  d: createChannel({ name: 'd', optional: false }),
+  d: createChannel({ name: 'd', optional: false, scale: 'identity' }),
   fill: createChannel({ name: 'fill' }),
   stroke: createChannel({ name: 'stroke' }),
 };

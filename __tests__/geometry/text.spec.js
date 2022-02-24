@@ -12,6 +12,10 @@ describe('text', () => {
       rotate: { name: 'rotate', optional: true },
       fill: { name: 'fill', optional: true },
       stroke: { name: 'stroke', optional: true },
+      fontWeight: {
+        name: 'fontWeight',
+        optional: true,
+      },
     });
   });
 
@@ -39,7 +43,7 @@ describe('text', () => {
       stroke: 'black',
       fill: '#5B8FF9',
       'font-size': '40',
-      'font-weight': '600',
+      'font-weight': 'normal',
     });
   });
 });

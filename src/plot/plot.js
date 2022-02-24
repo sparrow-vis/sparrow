@@ -46,7 +46,7 @@ function plotView({
   coordinates: coordinateOptions,
   geometries: geometriesOptions,
   width, height, x, y,
-  paddingLeft = 45, paddingRight = 45, paddingBottom = 45, paddingTop = 60,
+  paddingLeft = 45, paddingRight = 45, paddingBottom = 45, paddingTop = 65,
 }) {
   const geometries = geometriesOptions.map(initialize);
   const channels = geometries.map((d) => d.channels);

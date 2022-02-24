@@ -22,6 +22,7 @@ describe('plot', () => {
       encodings: {
         x: 'genre',
         y: 'sold',
+        fill: 'genre',
       },
     });
     mount(createDiv(), chart);
@@ -87,10 +88,12 @@ describe('plot', () => {
     const chart = sp.plot({
       type: 'interval',
       data: sports,
-      transforms: [(data) => {
-        const sum = data.reduce((total, d) => total + d.sold, 0);
-        return data.map(({ genre, sold }) => ({ genre, sold: sold / sum }));
-      }],
+      transforms: [
+        (data) => {
+          const sum = data.reduce((total, d) => total + d.sold, 0);
+          return data.map(({ genre, sold }) => ({ genre, sold: sold / sum }));
+        },
+      ],
       coordinates: [{ type: 'transpose' }, { type: 'polar' }],
       statistics: [{ type: 'stackY' }],
       scales: {
@@ -174,7 +177,6 @@ describe('plot', () => {
           ],
         },
       ],
-
     });
 
     mount(createDiv(), chart);
@@ -462,9 +464,7 @@ describe('plot', () => {
       type: 'link',
       data: profit,
       paddingLeft: 80,
-      transforms: [
-        (data) => data.filter((d) => d.month !== 'Total'),
-      ],
+      transforms: [(data) => data.filter((d) => d.month !== 'Total')],
       scales: {
         color: { type: 'identity' },
         y: { nice: true },
@@ -524,10 +524,7 @@ describe('plot', () => {
         fillOpacity: 0.4,
         strokeOpacity: 0.4,
       },
-      children: [
-        { type: 'area' },
-        { type: 'point' },
-      ],
+      children: [{ type: 'area' }, { type: 'point' }],
     });
 
     mount(createDiv(), chart);
@@ -685,5 +682,97 @@ describe('plot', () => {
       ],
     });
     mount(createDiv(), chart);
+  });
+
+  test.skip('facet', () => {
+    fetch(
+      'https://gw.alipayobjects.com/os/antvdemo/assets/data/diamond.json',
+    ).then((response) => response.json())
+      .then((data) => {
+        const chart = sp.plot({
+          data,
+          type: 'facet',
+          width: 900,
+          height: 900,
+          encodings: {
+            x: 'cut',
+            y: 'clarity',
+          },
+          scales: {
+            x: { label: null },
+            y: { label: null },
+          },
+          padding: 15,
+          children: [
+            {
+              type: 'point',
+              data,
+              encodings: {
+                x: 'carat',
+                y: 'price',
+              },
+              paddingTop: 0,
+              guides: {
+                x: { tickCount: 3 },
+                y: { tickCount: 3 },
+              },
+            },
+          ],
+        });
+        mount(createDiv(), chart);
+      });
+  });
+
+  test.skip('ribbon', () => {
+    fetch(
+      'https://gw.alipayobjects.com/os/bmw-prod/b45f3425-04bc-454a-8edd-26a0b4fc28d6.json',
+    ).then((response) => response.json()).then((data) => {
+      const month = [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec',
+      ];
+
+      const chart = sp.plot({
+        type: 'layer',
+        data,
+        width: 800,
+        statistics: [{ type: 'stackY' }],
+        encodings: {
+          y: 'profit',
+          x: (d) => month[d.month],
+          // x: 'month',
+          fill: 'territory',
+        },
+        scales: {
+          x: { type: 'band', padding: 0.5 },
+        },
+        guides: {
+          color: { width: 80, formatter: (d) => d.split(' ').pop() },
+          y: { formatter: (d) => `${(d / 1000) | 0}k` },
+        },
+        children: [
+          {
+            type: 'area',
+            styles: {
+              fillOpacity: 0.7,
+            },
+          },
+          {
+            type: 'interval',
+          },
+        ],
+      });
+      mount(createDiv(), chart);
+    });
   });
 });
