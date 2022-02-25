@@ -1,6 +1,6 @@
 {
   "name": "@sparrow-vis/sparrow",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Sparrow is a tiny plot library based on the grammar of graphics for learning purpose.",
   "main": "lib/sparrow.js",
   "module": "esm/sparrow.js",
