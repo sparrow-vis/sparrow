@@ -1,0 +1,31 @@
+{
+  "title": "Sparrow",
+  "assets": "./artwork",
+  "output": "website",
+  "logo": "./artwork/logo.png",
+  "github": "https://github.com/sparrow-vis/sparrow",
+  "link": "https://github.com/sparrow-vis",
+  "theme": {
+    "mainColor": "#0C987C"
+  },
+  "scripts": [
+    "dist/sparrow.min.js",
+    "docs/js/rough-renderer.min.js",
+    "docs/js/d3.layout.cloud.js"
+  ],
+  "outline": {
+    "Introduction": "introduction",
+    "Basic": {
+      "Geometry": "geometry",
+      "Scale": "scale",
+      "Coordinate": "Coordinate",
+      "Statistic": "statistic",
+      "Guide": "guide"
+    },
+    "Advanced": {
+      "View Composition": "view-composition",
+      "Rough Renderer": "rough-renderer",
+      "Work With D3": "work-with-d3"
+    }
+  }
+}
