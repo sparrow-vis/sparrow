@@ -12,7 +12,9 @@
   "scripts": [
     "dist/sparrow.min.js",
     "docs/js/rough-renderer.min.js",
-    "docs/js/d3.layout.cloud.js"
+    "docs/js/d3.layout.cloud.js",
+    "docs/js/d3.min.js",
+    "docs/js/topojson-client.min.js"
   ],
   "outline": {
     "Introduction": "introduction",

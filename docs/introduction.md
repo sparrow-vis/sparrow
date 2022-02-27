@@ -2,7 +2,7 @@
 
 Sparrow is a tiny plot library based on the grammar of graphics for learning purpose. It aims at helping people to better understand visualization and making it easier for them to choose the the suitable visualization library for their analysis task.
 
-![](https://gw.alipayobjects.com/mdn/rms_38d0f7/afts/img/A*pLBGQoXodSoAAAAAAAAAAAAAARQnAQ)
+![](https://gw.alipayobjects.com/mdn/rms_38d0f7/afts/img/A*qmh5SaBGuywAAAAAAAAAAAAAARQnAQ)
 
 ![](https://gw.alipayobjects.com/mdn/rms_38d0f7/afts/img/A*romnSZgAWacAAAAAAAAAAAAAARQnAQ)
 

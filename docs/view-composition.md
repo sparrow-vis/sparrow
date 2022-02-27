@@ -175,6 +175,82 @@ sp.plot({
 })();
 ```
 
+```js | dom
+(async () => {
+  const response = await fetch(
+    "https://gw.alipayobjects.com/os/bmw-prod/d345d2d7-a35d-4d27-af92-4982b3e6b213.json"
+  );
+  const data = await response.json();
+  const keys = ["id", "name", "country", "lifespan", "points"];
+  return sp.plot({
+    data,
+    type: "layer",
+    transforms: [
+      (data) => data.filter((_, i) => i < 10),
+      (data) =>
+        data.map(({ lifespan, points, ...rest }) => ({
+          ...rest,
+          lifespan: `[${lifespan[0]}, ${lifespan[1]}]`,
+          points: `[${points
+            .slice(0, 2)
+            .map((d) => d.slice(0, 2) + "...")
+            .join(", ")}]`,
+        })),
+      (data) => {
+        const ths = ["index", ...keys].map((key) => ({
+          index: -1,
+          key,
+          value: key,
+          header: true,
+        }));
+        const tds = data.flatMap((d, i) => {
+          const cell = keys.map((key) => ({ index: i, key, value: d[key] }));
+          return [...cell, { index: i, key: "index", value: i }];
+        });
+        return [...ths, ...tds].reverse();
+      },
+    ],
+    scales: {
+      y: { type: "band", padding: 0 },
+      x: { domain: ["index", ...keys], padding: 0 },
+      fontWeight: { type: "identity" },
+    },
+    width: 900,
+    guides: {
+      x: { display: false },
+      y: { display: false },
+    },
+    encodings: {
+      y: "index",
+      x: "key",
+    },
+    children: [
+      {
+        type: "cell",
+        encodings: {
+          fill: "none",
+          stroke: "#eee",
+        },
+      },
+      {
+        type: "text",
+        paddingTop: 10,
+        paddingLeft: 10,
+        paddingBottom: 10,
+        encodings: {
+          text: (d) => (d.header ? d.value.toUpperCase() : d.value),
+          fontWeight: (d) => (d.header ? "bold" : "normal"),
+        },
+        styles: {
+          dx: "0.5em",
+          dy: "-1em",
+        },
+      },
+    ],
+  });
+})();
+```
+
 ## Flex
 
 ```js | dom
