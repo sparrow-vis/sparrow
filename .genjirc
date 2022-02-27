@@ -4,6 +4,7 @@
   "output": "website",
   "logo": "./artwork/logo.png",
   "github": "https://github.com/sparrow-vis/sparrow",
+  "siteGithub": "https://github.com/sparrow-vis/sparrow-vis.github.io",
   "link": "https://github.com/sparrow-vis",
   "theme": {
     "mainColor": "#0C987C"
