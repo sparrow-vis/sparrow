@@ -43,7 +43,7 @@ const data = [
 const chart = plot({
   data,
   type: "interval",
-  encode: {
+  encodings: {
     x: "genre",
     y: "sold",
     fill: "genre",
@@ -93,7 +93,7 @@ const chart = plot({
   data,
   type: "interval",
   renderer: createPlugin(),
-  encode: {
+  encodings: {
     x: 'genre',
     y: 'sold',
     fill: 'genre'
