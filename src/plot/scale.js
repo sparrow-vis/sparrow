@@ -137,7 +137,7 @@ function isColor(name) {
 function isOrdinal(values) {
   return values.some((v) => {
     const type = typeof v;
-    return type === 'string' || type === 'value';
+    return type === 'string' || type === 'boolean';
   });
 }
 
