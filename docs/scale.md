@@ -1,13 +1,6 @@
 # Scale
 
-- <a href="#linear">Linear</a>
-- <a href="#log">Log</a>
-- <a href="#time">Time</a>
-- <a href="#band">Band</a>
-- <a href="#dot">Dot</a>
-- <a href="#threshold">threshold</a>
-- <a href="#quantile">Quantile</a>
-- <a href="#quantize">Quantize</a>
+Map abstract data into visual attributes.
 
 ## Linear
 

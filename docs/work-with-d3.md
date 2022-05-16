@@ -1,9 +1,6 @@
 # Work With D3
 
-- <a href="#d3-cloud">d3-cloud</a>
-- <a href="#d3-force">d3-force</a>
-- <a href="#d3-hierarchy">d3-hierarchy</a>
-- <a href="#d3-geo">d3-geo</a>
+Transform data in advanced with D3.
 
 ## d3-cloud
 

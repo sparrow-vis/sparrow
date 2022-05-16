@@ -1,8 +1,6 @@
 # View Composition
 
-- <a href="#layer">Layer</a>
-- <a href="#flex">Flex</a>
-- <a href="#facet">Facet</a>
+Compose views to build complex visualization.
 
 ## Layer
 

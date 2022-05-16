@@ -1,8 +1,6 @@
 # Coordinate
 
-- <a href="#polar">Polar</a>
-- <a href="#transpose">Transpose</a>
-- <a href="#mix">Mix</a>
+Transform normalized vectors into points in canvas.
 
 ## Polar
 
@@ -185,7 +183,7 @@ sp.plot({
   ],
   paddingLeft: 60,
   guides: {
-    y: { grid: true, formatter: d => Math.abs(d) },
+    y: { grid: true, formatter: (d) => Math.abs(d) },
   },
   coordinates: [{ type: "transpose" }],
   encodings: {

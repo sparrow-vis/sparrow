@@ -1,9 +1,6 @@
 # Statistic
 
-- <a href="#stacky">stackY</a>
-- <a href="#normalizey">normalizeY</a>
-- <a href="#symmetryy">symmetryY</a>
-- <a href="#biny">binX</a>
+Change the position of geometries.
 
 ## StackY
 

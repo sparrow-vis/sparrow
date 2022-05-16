@@ -1,9 +1,6 @@
 # Guide
 
-- <a href="#axisx">AxisX</a>
-- <a href="#axisy">AxisY</a>
-- <a href="#legendramp">LegendRamp</a>
-- <a href="#legendswatches">LegendSwatches</a>
+Visualize scales to help comprehend visual marks.
 
 ## AxisX
 
