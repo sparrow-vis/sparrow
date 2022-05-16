@@ -1,14 +1,6 @@
 # Geometry
 
-- <a href="#point">Point</a>
-- <a href="#interval">Interval</a>
-- <a href="#cell">Cell</a>
-- <a href="#rect">Rect</a>
-- <a href="#line">Line</a>
-- <a href="#area">Area</a>
-- <a href="#link">Link</a>
-- <a href="#text">Text</a>
-- <a href="#path">Path</a>
+Visual representation for data.
 
 ## Point
 

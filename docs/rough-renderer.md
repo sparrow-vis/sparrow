@@ -1,12 +1,6 @@
 # Rough Renderer
 
-- <a href="#rough-interval">Rough Interval</a>
-- <a href="#rough-cell">Rough Cell</a>
-- <a href="#rough-line">Rough Line</a>
-- <a href="#rough-point">Rough Point</a>
-- <a href="#rough-area">Rough Area</a>
-- <a href="#rough-path">Rough Path</a>
-- <a href="#rough-mix">Rough Mix</a>
+Render chart in a sketch-handy style.
 
 ## Rough Interval
 
